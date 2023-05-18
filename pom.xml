@@ -53,9 +53,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.oracle.database.jdbc</groupId>
+            <groupId>com.oracle.ojdbc</groupId>
             <artifactId>ojdbc8</artifactId>
-            <scope>runtime</scope>
+            <version>19.3.0.0</version>
         </dependency>
 
         <dependency>
