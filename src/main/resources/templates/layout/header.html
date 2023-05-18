@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="header">
+    <header class="row">
+        <div class="col">
+            <h1 id="logo"><strong>Lorem Ipsum</strong></h1>
+        </div>
+        <div class="col text-end mt-2" th:with="path=${#request.getRequestURI()}">
+            <!--<th:block th:if="${#httpServletRequest.requestURI eq '/'} or ${#strings.substring(#httpServletRequest.requestURI, 0, 6) ne '/join/'}">-->
+            <th:block th:if="${not #strings.startsWith(path, '/join')}">
+            <th:block th:if="${session.UID eq null}">
+                    <button type="button" class="btn btn-danger"
+                            data-bs-target="#loginModalfrm" data-bs-toggle="modal">로그인</button>
+                    <button type="button" class="btn btn-primary" id="joinpgbtn">회원가입</button>
+            </th:block>
+            <th:block th:unless="${session.UID eq null}">
+                    <button type="button" class="btn btn-dark" id="lgoutbtn">로그아웃</button>
+                    <button type="button" class="btn btn-success">회원정보</button>
+            </th:block>
+            </th:block>
+        </div>
+    </header>
+    <nav class="navbar navbar-expand bg-light rounded-3 border border-dark">
+        <ul class="navbar-nav nav-fill w-100">
+            <li class="nav-item"><a href="/intro" class="nav-link border-end fs-5">프로젝트 소개</a></li>
+            <li class="nav-item"><a href="/join/agree" class="nav-link border-end fs-5">회원가입</a></li>
+            <li class="nav-item"><a href="/board/list" class="nav-link border-end fs-5">게시판</a></li>
+            <li class="nav-item"><a href="/pds/list" class="nav-link border-end fs-5">자료실</a></li>
+            <li class="nav-item"><a href="/gallery/list" class="nav-link border-end fs-5">갤러리</a></li>
+            <li class="nav-item"><a href="/admin" class="nav-link fs-5">관리자</a></li>
+        </ul>
+    </nav>
+</th:block>
