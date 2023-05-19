@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,8 +41,10 @@ public class BoardDAOImpl implements BoardDAO{
 
     @Override
     public List<Board> selectBoard(Map<String, Object> params) {
-
-        return null;
+        List<Board> board = new ArrayList<>();
+        PageRequest paging = PageRequest.of(1,10, Sort.by("bno").descending());
+        if(params.containsKey("ftype"))board = boardRepository.findByTitleLike(String.valueOf(params.get("fkey")), paging).getContent();
+        return board;
     }
 
     @Override
