@@ -24,6 +24,7 @@ public class BoardDAOImpl implements BoardDAO{
 
     @Override
     public int selectBoard() {
+        System.out.println(boardRepository.find());
         return Math.toIntExact(boardRepository.find());
     }
 
@@ -49,6 +50,7 @@ public class BoardDAOImpl implements BoardDAO{
 
     @Override
     public Board selectOneBoard(Integer bno) {
+        boardRepository.countViewBoard((long)bno);
         return boardRepository.findById((long)bno).get();
     }
 }
