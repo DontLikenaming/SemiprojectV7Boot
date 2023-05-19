@@ -28,7 +28,7 @@ public class MemberTest {
     @Test
     @DisplayName("member save")
     public void saveMember() {
-        Member m = new Member(null, "이름", 010, 1234, 5678, "qwerty", "asdfzxcv", "123-456",  "서울시 가산동", "어딘가", "qwerty@gmail.com", null);
+        Member m = new Member(null, "이름", "010", "1234", "5678", "qwerty", "asdfzxcv", "123-456",  "서울시 가산동", "어딘가", "qwerty@gmail.com", null);
 
         memberRepository.save(m);
     }
@@ -36,7 +36,7 @@ public class MemberTest {
     @Test
     @DisplayName("member update")
     public void updateMember() {
-        Member m = new Member(21L, "이름2", 010, 4567, 8901, "asdf", "asdfzxcv", "123-456",  "서울시 가산동", "어딘가", "qwerty@gmail.com", null);
+        Member m = new Member(21L, "이름2", "010", "4567", "8901", "asdf", "asdfzxcv", "123-456",  "서울시 가산동", "어딘가", "qwerty@gmail.com", null);
 
         memberRepository.save(m);
     }
@@ -45,8 +45,15 @@ public class MemberTest {
     @DisplayName("member delete")
     public void deleteMember() {
         Member m = new Member();
-        m.setMbno(21L);
+        m.setMbno(22L);
 
         memberRepository.delete(m);
+    }
+
+    @Test
+    @DisplayName("member selectOne")
+    public void selectOneMember() {
+        String userid = "aaa";
+        System.out.println(memberRepository.findMemberByUserid(userid));
     }
 }
