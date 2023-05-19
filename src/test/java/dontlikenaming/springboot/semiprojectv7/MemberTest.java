@@ -9,6 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+
 @SpringBootTest
 public class MemberTest {
 
@@ -54,6 +58,15 @@ public class MemberTest {
     @DisplayName("member selectOne")
     public void selectOneMember() {
         String userid = "aaa";
-        System.out.println(memberRepository.findMemberByUserid(userid));
+        System.out.println(memberRepository.findByUserid(userid));
+    }
+
+    @Test
+    @DisplayName("member login")
+    public void loginMember() {
+        Member m = new Member();
+        m.setUserid("aaaaaaa");
+        m.setPasswd("aaaaaaa");
+        assertNotNull(memberRepository.findByUseridAndPasswd(m.getUserid(), m.getPasswd()));
     }
 }

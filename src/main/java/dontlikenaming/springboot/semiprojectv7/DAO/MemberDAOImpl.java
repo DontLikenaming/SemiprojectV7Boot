@@ -5,6 +5,8 @@ import dontlikenaming.springboot.semiprojectv7.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository("mdao")
 public class MemberDAOImpl implements MemberDAO{
 
@@ -14,9 +16,8 @@ public class MemberDAOImpl implements MemberDAO{
     @Override
     public int selectLogin(Member m) {
         int result = 0;
-        String userid = m.getUserid();
-        String passwd = m.getPasswd();
-        if(memberRepository.findMemberByUseridAndPasswd(userid, passwd)>0){
+
+        if(memberRepository.findByUseridAndPasswd(m.getUserid(), m.getPasswd())!=null){
             result = 1;
         }
         return result;
