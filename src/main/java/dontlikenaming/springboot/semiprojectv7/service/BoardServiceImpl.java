@@ -3,6 +3,7 @@ package dontlikenaming.springboot.semiprojectv7.service;
 import dontlikenaming.springboot.semiprojectv7.DAO.BoardDAO;
 import dontlikenaming.springboot.semiprojectv7.model.Board;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -14,9 +15,8 @@ public class BoardServiceImpl implements BoardService{
     @Autowired private BoardDAO bdao;
 
     @Override
-    public List<Board> readBoard(Integer cpage) {
-        int stdno = (cpage-1)*10;
-        return bdao.selectBoard(stdno);
+    public Page<Board> readBoard(Integer cpage) {
+        return bdao.selectBoard(cpage);
     }
 
     @Override

@@ -20,7 +20,7 @@ public class BoardController {
         int cntpg = bdsrv.countBoard();
 
         if((page==null)||(page<=0)){page = 1;}
-        else if(page>cntpg){page = cntpg;}
+        //else if(page>cntpg){page = cntpg;}
 
         ModelAndView mv = new ModelAndView();
         mv.setViewName("board/list");

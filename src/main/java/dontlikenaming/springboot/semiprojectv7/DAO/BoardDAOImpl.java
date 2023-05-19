@@ -1,7 +1,10 @@
 package dontlikenaming.springboot.semiprojectv7.DAO;
 
 import dontlikenaming.springboot.semiprojectv7.model.Board;
+import dontlikenaming.springboot.semiprojectv7.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,14 +13,18 @@ import java.util.Map;
 @Repository("bdao")
 public class BoardDAOImpl implements BoardDAO{
 
+    @Autowired
+    BoardRepository boardRepository;
+
     @Override
-    public List<Board> selectBoard(int stdno) {
-        return null;
+    public Page<Board> selectBoard(int cpage) {
+        PageRequest pageRequest = PageRequest.of(cpage-1,10);
+        return boardRepository.findAll(pageRequest);
     }
 
     @Override
     public int selectBoard() {
-        return 0;
+        return Math.toIntExact(boardRepository.find());
     }
 
     @Override
@@ -27,7 +34,7 @@ public class BoardDAOImpl implements BoardDAO{
 
     @Override
     public int insertBoard(Board bd) {
-        return 0;
+        return Math.toIntExact(boardRepository.save(bd).getBno());
     }
 
     @Override
@@ -42,6 +49,6 @@ public class BoardDAOImpl implements BoardDAO{
 
     @Override
     public Board selectOneBoard(Integer bno) {
-        return null;
+        return boardRepository.findById((long)bno).get();
     }
 }
