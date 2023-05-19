@@ -15,11 +15,6 @@ public class MemberDAOImpl implements MemberDAO{
 
     @Override
     public int selectLogin(Member m) {
-        int result = 0;
-
-        if(memberRepository.findByUseridAndPasswd(m.getUserid(), m.getPasswd())!=null){
-            result = 1;
-        }
-        return result;
+        return memberRepository.countByUseridAndPasswd(m.getUserid(), m.getPasswd());
     }
 }
