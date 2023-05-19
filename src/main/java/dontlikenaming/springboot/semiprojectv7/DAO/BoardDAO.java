@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface BoardDAO {
-    Page<Board> selectBoard(int cpage);
-
+    List<Board> selectBoard(int cpage);
     int selectBoard();
     int countBoard();
     int insertBoard(Board bd);

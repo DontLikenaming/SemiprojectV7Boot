@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface BoardService {
-    Page<Board> readBoard(Integer cpage);
+    List<Board> readBoard(Integer cpage);
     int countBoard();
 
     List<Board> readBoard(Integer cpage, String ftype, String fkey);

@@ -18,14 +18,13 @@ public class BoardDAOImpl implements BoardDAO{
     BoardRepository boardRepository;
 
     @Override
-    public Page<Board> selectBoard(int cpage) {
-        PageRequest pageRequest = PageRequest.of(cpage-1,10, Sort.by("bno").descending());
-        return boardRepository.findAll(pageRequest);
+    public List<Board> selectBoard(int cpage) {
+        PageRequest paging = PageRequest.of(cpage-1,10, Sort.by("bno").descending());
+        return boardRepository.findAll(paging).getContent();
     }
 
     @Override
     public int selectBoard() {
-        System.out.println(boardRepository.find());
         return Math.toIntExact(boardRepository.find());
     }
 
@@ -41,6 +40,7 @@ public class BoardDAOImpl implements BoardDAO{
 
     @Override
     public List<Board> selectBoard(Map<String, Object> params) {
+
         return null;
     }
 
