@@ -35,7 +35,7 @@ public class JoinDAOImpl implements JoinDAO{
     @Override
     public int selectOneUserid(String userid) {
         int result;
-        result = memberRepository.findMemberByUserid(userid);
+        result = memberRepository.findByUserid(userid);
         return result;
     }
 

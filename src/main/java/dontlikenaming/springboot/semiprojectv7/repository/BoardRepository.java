@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
-    @Query("select count(b.bno) from Board b")
+    @Query("select max(b.bno) from Board b")
     Long find();
 
     // BoardRepository에서는 DML은 지원하지 않음
@@ -18,6 +18,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Modifying
     @Transactional
     @Query("update Board set views = views + 1 where bno = :bno")
-    void countViewBoard(@Param("bno") Long bno);
+    int countViewBoard(@Param("bno") Long bno);
 
 }

@@ -22,7 +22,13 @@ public class BoardTest {
     public void saveBoard(){
         Board b = new Board(null, "Test01", "qwerty", null, null, "테스트", null);
         boardRepository.save(b);
+    }
 
+    @Test
+    @DisplayName("board read")
+    public void readBoard(){
+        int bno = 4;
+        boardRepository.countViewBoard((long)bno);
     }
 
 }

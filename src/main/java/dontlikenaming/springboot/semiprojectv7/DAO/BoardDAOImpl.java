@@ -5,6 +5,7 @@ import dontlikenaming.springboot.semiprojectv7.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class BoardDAOImpl implements BoardDAO{
 
     @Override
     public Page<Board> selectBoard(int cpage) {
-        PageRequest pageRequest = PageRequest.of(cpage-1,10);
+        PageRequest pageRequest = PageRequest.of(cpage-1,10, Sort.by("bno").descending());
         return boardRepository.findAll(pageRequest);
     }
 
@@ -50,7 +51,7 @@ public class BoardDAOImpl implements BoardDAO{
 
     @Override
     public Board selectOneBoard(Integer bno) {
-        boardRepository.countViewBoard((long)bno);
-        return boardRepository.findById((long)bno).get();
+        boardRepository.countViewBoard((long) bno);
+        return boardRepository.findById((long) bno).get();
     }
 }

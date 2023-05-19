@@ -42,7 +42,7 @@ public class JoinController {
         grecaptcha = null;
 
         if(jnsrv.newMember(m)){
-            view = "templates/join/joinok";
+            view = "join/joinok";
         }
 
         return view;
