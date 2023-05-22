@@ -3,7 +3,9 @@ package dontlikenaming.springboot.semiprojectv7.repository;
 import dontlikenaming.springboot.semiprojectv7.model.Board;
 import dontlikenaming.springboot.semiprojectv7.model.Zipcode;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,15 +27,21 @@ public interface BoardRepository extends PagingAndSortingRepository<Board, Long>
     @Query("update Board set views = views + 1 where bno = :bno")
     int countViewBoard(@Param("bno") Long bno);
 
-    Page<Board> findByTitleLike(@Param("title") String title, Pageable pageable);
+    Page<Board> findByTitleContains(Pageable pageable, @Param("title") String title);
 
-    Page<Board> findByContentLike(@Param("content") String content, Pageable pageable);
+    Page<Board> findByContentContains(Pageable pageable, @Param("content") String content);
 
-    @Query("select count(bno) from Board where title like :title")
-    Long countBnoByTitleLike(@Param("title") String title);
+    Page<Board> findByUserid(PageRequest paging, @Param("userid") String userid);
 
-    @Query("select count(bno) from Board where content like :content")
-    Long countBnoByContentLike(@Param("content") String content);
+    Page<Board> findByTitleContainsOrContentContains(PageRequest paging, @Param("title") String title, @Param("content") String content);
+
+    Long countBnoByTitleContains(@Param("title") String title);
+
+    Long countBnoByContentContains(@Param("content") String content);
+
+    Long countBnoByUserid(@Param("userid") String userid);
+
+    Long countBnoByTitleContainsOrContentContains(@Param("title") String title, @Param("content") String content);
 
     int countBoardBy();
 }

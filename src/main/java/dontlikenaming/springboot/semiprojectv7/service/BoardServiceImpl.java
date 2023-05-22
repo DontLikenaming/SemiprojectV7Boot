@@ -3,7 +3,6 @@ package dontlikenaming.springboot.semiprojectv7.service;
 import dontlikenaming.springboot.semiprojectv7.DAO.BoardDAO;
 import dontlikenaming.springboot.semiprojectv7.model.Board;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -25,8 +24,8 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public List<Board> readBoard(Integer cpage, String ftype, String fkey) {
-        int stdno = (cpage-1)*10;
+    public List<Board> readBoard(Integer page, String ftype, String fkey) {
+        int stdno = (page-1);
 
         // 처리 시 사용할 데이터들을 해쉬맵에 담아서 보냄
         Map<String, Object> params = new HashMap<>();

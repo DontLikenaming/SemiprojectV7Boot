@@ -20,7 +20,7 @@ public class BoardController {
         int cntpg = bdsrv.countBoard();
 
         if((page==null)||(page<=0)){page = 1;}
-        //else if(page>cntpg){page = cntpg;}
+        else if((page>cntpg)){page = cntpg;}
 
         ModelAndView mv = new ModelAndView();
         mv.setViewName("board/list");
@@ -35,14 +35,15 @@ public class BoardController {
     @GetMapping(value = "/find")    // 검색 처리
     public ModelAndView find(Integer page, String ftype, String fkey){
         ModelAndView mv = new ModelAndView();
-        int cntpg = bdsrv.countBoard(ftype, fkey);
-
         if((page==null)||(page<=0)){page = 1;}
-        else if(page>cntpg){page = cntpg;}
+        int cntpg = bdsrv.countBoard(ftype, fkey);
+        if(page>cntpg){page = cntpg;}
 
+        System.out.println("page : "+page);
+        System.out.println("cntpg : "+cntpg);
         mv.addObject("bdlist", bdsrv.readBoard(page, ftype, fkey));
         mv.addObject("page", page);
-        mv.addObject("stpg", (page-1)/10*10+1);
+        mv.addObject("stpg", ((page-1)/10)*10+1);
         mv.addObject("cntpg", cntpg);
         mv.setViewName("board/list");
         return mv;

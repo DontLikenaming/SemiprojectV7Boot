@@ -1,15 +1,16 @@
 package dontlikenaming.springboot.semiprojectv7;
 
 import dontlikenaming.springboot.semiprojectv7.model.Board;
-import dontlikenaming.springboot.semiprojectv7.model.Zipcode;
 import dontlikenaming.springboot.semiprojectv7.repository.BoardRepository;
-import dontlikenaming.springboot.semiprojectv7.repository.ZipcodeRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @SpringBootTest
 public class BoardTest {
@@ -29,6 +30,30 @@ public class BoardTest {
     public void readBoard(){
         int bno = 4;
         boardRepository.countViewBoard((long)bno);
+    }
+
+    @Test
+    @DisplayName("board select")
+    public void selectBoard(){
+        Map<String, Object> params = new HashMap<>();
+        params.put("stdno", 0);
+        params.put("ftype", "title");
+        params.put("fkey", "Test");
+
+        String fkey = params.get("fkey").toString();
+        //PageRequest paging = PageRequest.of(0,10);
+        //System.out.println(boardRepository.findByTitleLike(fkey, paging).getContent());
+        System.out.println(Math.toIntExact(boardRepository.countBnoByTitleContains(fkey)));
+    }
+
+    @Test
+    @DisplayName("board select+count")
+    public void selectcountBoard(){
+        int result;
+        String fkey = '%' + "qwerty" + '%';
+        fkey = fkey.replace("%","");
+        result = Math.toIntExact(boardRepository.countBnoByUserid(fkey));
+        System.out.println(result);
     }
 
 }

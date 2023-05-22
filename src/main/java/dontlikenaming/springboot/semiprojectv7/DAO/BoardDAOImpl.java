@@ -3,12 +3,10 @@ package dontlikenaming.springboot.semiprojectv7.DAO;
 import dontlikenaming.springboot.semiprojectv7.model.Board;
 import dontlikenaming.springboot.semiprojectv7.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +30,7 @@ public class BoardDAOImpl implements BoardDAO{
     @Override
     public int countBoard() {
         int allcnt = boardRepository.countBoardBy();
-        return (int) Math.ceil((allcnt/10));
+        return (int) Math.ceil((double)allcnt/10);
     }
 
     @Override
@@ -42,37 +40,52 @@ public class BoardDAOImpl implements BoardDAO{
 
     @Override
     public List<Board> selectBoard(Map<String, Object> params) {
-        List<Board> board = new ArrayList<>();
+        List<Board> result = null;
 
         int page = (int) params.get("stdno");
-        System.out.println("dao : " + page);
-        String fkey = "%" + params.get("fkey") + "%";
+        String fkey = params.get("fkey").toString();
+        String ftype = params.get("ftype").toString();
         PageRequest paging = PageRequest.of(page,10, Sort.by("bno").descending());
 
-        if(String.valueOf(params.get("ftype")).equals("title")) {
-            board = boardRepository.findByTitleLike(fkey, paging).getContent();
-        } else if(String.valueOf(params.get("ftype")).equals("content")) {
-            board = boardRepository.findByContentLike(fkey, paging).getContent();
+        switch (ftype){
+            case "title":
+                result = boardRepository.findByTitleContains(paging, fkey).getContent(); break;
+            case "content":
+                result = boardRepository.findByContentContains(paging, fkey).getContent(); break;
+            case "userid":
+                result = boardRepository.findByUserid(paging, fkey).getContent(); break;
+            case "titcont":
+                result = boardRepository.findByTitleContainsOrContentContains(paging, fkey, fkey).getContent(); break;
         }
 
-        return board;
+        return result;
     }
 
     @Override
     public int countBoard(Map<String, Object> params) {
-        int result = 0;
-        String fkey = "%" + params.get("fkey") + "%";
-        String ftype = (String) params.get("ftype");
-        System.out.println(ftype);
+        int allcnt = 0;
 
-        if(String.valueOf(params.get("ftype")).equals("title")) {
-            result = Math.toIntExact(boardRepository.countBnoByTitleLike(fkey));
-        } else if(String.valueOf(params.get("ftype")).equals("content")){
-            result = Math.toIntExact(boardRepository.countBnoByContentLike(fkey));
+        // like 검색에 대한 query method
+        // findByTitleLike          : %검색어% (%문자 제공 필요)
+        // findByTitleContains      : %검색어% (%문자 제공 필요x)
+        // findByTitleStartsWith    : 검색어% (%문자 제공 필요x)
+        // findByTitleEndsWith      : %검색어 (%문자 제공 필요x)
+        String fkey = params.get("fkey").toString();
+        String ftype = params.get("ftype").toString();
+
+        switch (ftype){
+            case "title":
+                allcnt = Math.toIntExact(boardRepository.countBnoByTitleContains(fkey)); break;
+            case "content":
+                allcnt = Math.toIntExact(boardRepository.countBnoByContentContains(fkey)); break;
+            case "userid":
+                allcnt = Math.toIntExact(boardRepository.countBnoByUserid(fkey)); break;
+            case "titcont":
+                allcnt = Math.toIntExact(boardRepository.countBnoByTitleContainsOrContentContains(fkey, fkey)); break;
         }
+        if(allcnt==0)allcnt=1;
 
-        result = result/10;
-        return result;
+        return (int) Math.ceil((double)allcnt/10);
     }
 
     @Override
