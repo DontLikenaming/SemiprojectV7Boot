@@ -26,4 +26,14 @@ public interface BoardRepository extends PagingAndSortingRepository<Board, Long>
     int countViewBoard(@Param("bno") Long bno);
 
     Page<Board> findByTitleLike(@Param("title") String title, Pageable pageable);
+
+    Page<Board> findByContentLike(@Param("content") String content, Pageable pageable);
+
+    @Query("select count(bno) from Board where title like :title")
+    Long countBnoByTitleLike(@Param("title") String title);
+
+    @Query("select count(bno) from Board where content like :content")
+    Long countBnoByContentLike(@Param("content") String content);
+
+    int countBoardBy();
 }

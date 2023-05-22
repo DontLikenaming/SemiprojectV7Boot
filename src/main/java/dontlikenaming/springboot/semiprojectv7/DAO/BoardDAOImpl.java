@@ -31,7 +31,8 @@ public class BoardDAOImpl implements BoardDAO{
 
     @Override
     public int countBoard() {
-        return 0;
+        int allcnt = boardRepository.countBoardBy();
+        return (int) Math.ceil((allcnt/10));
     }
 
     @Override
@@ -42,14 +43,36 @@ public class BoardDAOImpl implements BoardDAO{
     @Override
     public List<Board> selectBoard(Map<String, Object> params) {
         List<Board> board = new ArrayList<>();
-        PageRequest paging = PageRequest.of(1,10, Sort.by("bno").descending());
-        if(params.containsKey("ftype"))board = boardRepository.findByTitleLike(String.valueOf(params.get("fkey")), paging).getContent();
+
+        int page = (int) params.get("stdno");
+        System.out.println("dao : " + page);
+        String fkey = "%" + params.get("fkey") + "%";
+        PageRequest paging = PageRequest.of(page,10, Sort.by("bno").descending());
+
+        if(String.valueOf(params.get("ftype")).equals("title")) {
+            board = boardRepository.findByTitleLike(fkey, paging).getContent();
+        } else if(String.valueOf(params.get("ftype")).equals("content")) {
+            board = boardRepository.findByContentLike(fkey, paging).getContent();
+        }
+
         return board;
     }
 
     @Override
     public int countBoard(Map<String, Object> params) {
-        return 0;
+        int result = 0;
+        String fkey = "%" + params.get("fkey") + "%";
+        String ftype = (String) params.get("ftype");
+        System.out.println(ftype);
+
+        if(String.valueOf(params.get("ftype")).equals("title")) {
+            result = Math.toIntExact(boardRepository.countBnoByTitleLike(fkey));
+        } else if(String.valueOf(params.get("ftype")).equals("content")){
+            result = Math.toIntExact(boardRepository.countBnoByContentLike(fkey));
+        }
+
+        result = result/10;
+        return result;
     }
 
     @Override
