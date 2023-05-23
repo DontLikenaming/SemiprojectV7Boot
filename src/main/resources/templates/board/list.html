@@ -8,11 +8,6 @@
         <hr>
     </div>
     <div class="row mt-5 mb-3">
-        <th:block th:if="${page gt cntpg}">
-            <script th:inline="javascript">
-                location.href="/board/list?page="+[[${cntpg}]];
-            </script>
-        </th:block>
         <!--<th:block th:if="${not #strings.isEmpty(session.UID)}">-->
         <th:block th:if="${session.UID ne null}">
         <div class="row offset-2 col-6">
@@ -78,6 +73,13 @@
             <nav>
                 <ul class="pagination justify-content-center"
                     th:with="pglink = ${#strings.isEmpty(param.fkey) ? '/board/list?page=' : '/board/find?ftype='+param.ftype+'&fkey='+param.fkey+'&page='}">
+
+                    <th:block th:if="${page gt cntpg}">
+                        <script th:inline="javascript">
+                            location.href=[[${pglink}]]+[[${cntpg}]];
+                        </script>
+                    </th:block>
+
                     <th:block th:if="${page > 10}">
                         <li class="page-item"><a class="page-link" th:href="|${pglink}1|">처음</a></li>
                         <li class="page-item"><a class="page-link" th:href="|${pglink}${(page%10 eq 0) ? stpg - 10 : page - 1}|">이전 10개</a></li>
