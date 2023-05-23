@@ -22,8 +22,6 @@ public class BoardController {
         if((page==null)||(page<=0)){page = 1;}
         Map<String, Object> bds = bdsrv.readBoard(page);
 
-        System.out.println(bds.get("bdlist"));
-
         ModelAndView mv = new ModelAndView();
         mv.setViewName("board/list");
         mv.addObject("bdlist", bds.get("bdlist"));
@@ -38,15 +36,12 @@ public class BoardController {
     public ModelAndView find(Integer page, String ftype, String fkey){
         ModelAndView mv = new ModelAndView();
         if((page==null)||(page<=0)){page = 1;}
-        int cntpg = bdsrv.countBoard(ftype, fkey);
-        if(page>cntpg){page = cntpg;}
+        Map<String, Object> bds = bdsrv.readBoard(page, ftype, fkey);
 
-        System.out.println("page : "+page);
-        System.out.println("cntpg : "+cntpg);
-        mv.addObject("bdlist", bdsrv.readBoard(page, ftype, fkey));
+        mv.addObject("bdlist", bds.get("bdlist"));
         mv.addObject("page", page);
         mv.addObject("stpg", ((page-1)/10)*10+1);
-        mv.addObject("cntpg", cntpg);
+        mv.addObject("cntpg", bds.get("cntpg"));
         mv.setViewName("board/list");
         return mv;
     }

@@ -3,6 +3,7 @@ package dontlikenaming.springboot.semiprojectv7.DAO;
 import dontlikenaming.springboot.semiprojectv7.model.Board;
 import dontlikenaming.springboot.semiprojectv7.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
@@ -34,8 +35,8 @@ public class BoardDAOImpl implements BoardDAO{
     }
 
     @Override
-    public List<Board> selectBoard(Map<String, Object> params) {
-        List<Board> result = null;
+    public Map<String, Object> selectBoard(Map<String, Object> params) {
+        Page<Board> result = null;
 
         int page = (int) params.get("stdno");
         String fkey = params.get("fkey").toString();
@@ -44,19 +45,37 @@ public class BoardDAOImpl implements BoardDAO{
 
         switch (ftype){
             case "title":
-                result = boardRepository.findByTitleContains(paging, fkey).getContent(); break;
+                result = boardRepository.findByTitleContains(paging, fkey);
+                break;
             case "content":
-                result = boardRepository.findByContentContains(paging, fkey).getContent(); break;
+                result = boardRepository.findByContentContains(paging, fkey);
+                break;
             case "userid":
-                result = boardRepository.findByUserid(paging, fkey).getContent(); break;
+                result = boardRepository.findByUserid(paging, fkey);
+                break;
             case "titcont":
-                result = boardRepository.findByTitleContainsOrContentContains(paging, fkey, fkey).getContent(); break;
+                result = boardRepository.findByTitleContainsOrContentContains(paging, fkey, fkey);
+                break;
         }
 
-        return result;
+        Map<String, Object> bds = new HashMap<>();
+        bds.put("bdlist", result.getContent());
+        bds.put("cntpg", result.getTotalPages());
+
+        return bds;
     }
 
     @Override
+    public Board selectOneBoard(Integer bno) {
+        int cntpg = Math.toIntExact(boardRepository.countBoardBy());
+        if(bno>cntpg)bno=cntpg;
+
+        boardRepository.countViewBoard((long) bno);
+
+        return boardRepository.findById((long) bno).get();
+    }
+
+    /*@Override
     public int countBoard(Map<String, Object> params) {
         int allcnt = 0;
 
@@ -81,15 +100,5 @@ public class BoardDAOImpl implements BoardDAO{
         if(allcnt==0)allcnt=1;
 
         return (int) Math.ceil((double)allcnt/10);
-    }
-
-    @Override
-    public Board selectOneBoard(Integer bno) {
-        int cntpg = Math.toIntExact(boardRepository.countBoardBy());
-        if(bno>cntpg)bno=cntpg;
-
-        boardRepository.countViewBoard((long) bno);
-
-        return boardRepository.findById((long) bno).get();
-    }
+    }*/
 }

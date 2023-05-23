@@ -8,13 +8,11 @@ import java.util.Map;
 public interface BoardService {
     Map<String, Object> readBoard(Integer cpage);
 
-    List<Board> readBoard(Integer cpage, String ftype, String fkey);
-
-    int countBoard(String ftype, String fkey);
+    Map<String, Object> readBoard(Integer cpage, String ftype, String fkey);
 
     boolean newBoard(Board bd);
 
     Board readOneBoard(Integer bno);
 
-
+/*    int countBoard(String ftype, String fkey);*/
 }

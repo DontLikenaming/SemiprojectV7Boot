@@ -34,11 +34,11 @@ public interface BoardRepository extends PagingAndSortingRepository<Board, Long>
 
     Page<Board> findByTitleContainsOrContentContains(PageRequest paging, @Param("title") String title, @Param("content") String content);
 
-    Long countBnoByTitleContains(@Param("title") String title);
+    /*Long countBnoByTitleContains(@Param("title") String title);
 
     Long countBnoByContentContains(@Param("content") String content);
 
     Long countBnoByUserid(@Param("userid") String userid);
 
-    Long countBnoByTitleContainsOrContentContains(@Param("title") String title, @Param("content") String content);
+    Long countBnoByTitleContainsOrContentContains(@Param("title") String title, @Param("content") String content);*/
 }
