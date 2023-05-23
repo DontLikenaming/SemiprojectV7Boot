@@ -30,8 +30,8 @@
                         <div class="col-7">
                             <input type="text" class="form-control border-danger"
                                    id="title" name="title">
-                            <p th:if="${#fields.hasErrors('title')}"
-                            th:errors="*{title}"></p>
+                            <span th:if="${#fields.hasErrors('title')}"
+                            th:errors="*{title}" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -39,8 +39,8 @@
                         <div class="col-7">
                             <input type="text" class="form-control border-danger bg-light"
                                    id="userid" name="userid" th:value="${session.UID}" readonly>
-                            <p th:if="${#fields.hasErrors('userid')}"
-                               th:errors="*{userid}"></p>
+                            <span th:if="${#fields.hasErrors('userid')}"
+                               th:errors="*{userid}" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -48,8 +48,8 @@
                         <div class="col-7">
                         <textarea class="form-control border-danger"
                                   id="content" name="content" rows="15"></textarea>
-                            <p th:if="${#fields.hasErrors('content')}"
-                               th:errors="*{content}"></p>
+                            <span th:if="${#fields.hasErrors('content')}"
+                               th:errors="*{content}" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -65,11 +65,11 @@
                         <div class="text-center">
                             <button type="button" class="btn btn-primary"
                                     id="writebtn" name="writebtn">
-                                <i class="fa fa-check">입력 완료</i>
+                                <i class="fa fa-check"> 입력 완료</i>
                             </button>
                             <button type="button" class="btn btn-danger"
                                     id="cancelbtn" name="cancelbtn">
-                                <i class="fa fa-remove">취소하기</i>
+                                <i class="fa fa-remove"> 취소하기</i>
                             </button>
                         </div>
                     </div>

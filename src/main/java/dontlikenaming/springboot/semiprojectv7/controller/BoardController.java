@@ -6,11 +6,13 @@ import dontlikenaming.springboot.semiprojectv7.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 @Controller
@@ -55,11 +57,11 @@ public class BoardController {
     }
 
     @PostMapping(value = "/write")
-    public String writeok(Board bd, String grecaptcha){
-        String view = "error";
-        grecaptcha = null;
+    public String writeok(@Valid Board board, BindingResult br){
+        String view = "redirect:/board/list";
 
-        if(bdsrv.newBoard(bd)){ view = "redirect:/board/list"; }
+        if(br.hasErrors()) view = "board/write";  // 유효성 검사 실패 시, 작성 페이지로 되돌아감
+        else bdsrv.newBoard(board);
 
         return view;
     }
