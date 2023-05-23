@@ -231,22 +231,13 @@ email3?.addEventListener("click",() => {
 });
 
 joinbtn?.addEventListener("click", () =>{
-    if(joinfrm.userid.value == '') alert('아이디를 입력해주세요!');
-    else if(joinfrm.checkuid.value === "no") alert('다른 아이디를 사용해주세요!');
-    else if(joinfrm.passwd.value == '') alert('비밀번호를 입력해주세요!');
-    else if(joinfrm.checkpwd.value !== "yes") alert('다른 아이디를 사용해주세요!');
-    else if(joinfrm.reppsswd.value == '') alert('비밀번호 확인란을 입력해주세요!');
-    else if(joinfrm.passwd.value !== reppsswd.value) alert('비밀번호가 일치하지 않습니다!');
-    else if(joinfrm.zip1.value == '' || zip2.value == '') alert('우편번호를 확인해주세요!');
-    else if(joinfrm.addr1.value == '' || addr2.value == '') alert('주소를 확인해주세요!');
-    else if(joinfrm.email1.value == '' || email2.value == '') alert('이메일을 확인해주세요!');
-    else if(grecaptcha.getResponse() == '') alert('자동가입방지를 확인해주세요!');
-    else {
+/*if(grecaptcha.getResponse() == '') alert('자동가입방지를 확인해주세요!');
+    else*/ {
         joinfrm.zipcode.value = joinfrm.zip1.value + "-" + joinfrm.zip2.value;
         joinfrm.email.value = joinfrm.email1.value + "@" + joinfrm.email2.value;
 
         joinfrm.method='post';
-        joinfrm.action='/join/joinok';
+        joinfrm.action='/join/joinme';
         joinfrm.submit();
     }
 })

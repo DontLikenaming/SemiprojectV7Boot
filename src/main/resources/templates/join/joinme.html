@@ -27,13 +27,13 @@
         </div>
         <div class="card card-body bg-light mt-5 mx-3">
             <h3 class="mb-4">일반회원</h3>
-            <form name="joinfrm" id="joinfrm">
+            <form name="joinfrm" id="joinfrm" th:object="${member}">
                 <div class="row">
                     <div class="row col-11 offset-1 align-items-center">
                         <label class="col-2 form-label text-danger text-end mt-1" for="name">이름</label>
                         <div class="col-3">
                             <input type="text" class="form-control border-danger bg-light"
-                                   id="name" name="name" th:value="${mb.name}" readonly>
+                                   id="name" name="name" th:value="${session.ckm.name}" readonly>
                         </div>
                     </div>
                     <div class="row col-11 offset-1 mt-3 align-items-center">
@@ -41,7 +41,13 @@
                         <div class="col-3">
                             <input type="text" class="form-control border-danger" id="userid" name="userid">
                         </div>
-                        <span class="col-auto form-text" id="uidmsg">
+                        <span class="col-auto form-text" id="uidmsg"
+                              th:unless="${#fields.hasErrors('userid')}">
+                            6~16 자의 영문 소문자, 숫자와 특수기호(_)만 사용할 수 있습니다.
+                        </span>
+                        <span class="col-auto form-text text-danger"
+                              th:if="${#fields.hasErrors('userid')}"
+                              th:errors="*{userid}">
                             6~16 자의 영문 소문자, 숫자와 특수기호(_)만 사용할 수 있습니다.
                         </span>
                     </div>
@@ -50,7 +56,13 @@
                         <div class="col-3">
                             <input type="password" class="form-control border-danger" id="passwd" name="passwd">
                         </div>
-                        <span class="col-auto form-text" id="pwdmsg">
+                        <span class="col-auto form-text" id="pwdmsg"
+                              th:unless="${#fields.hasErrors('passwd')}">
+                            6~16 자의 영문 소문자, 숫자와 특수기호(_)만 사용할 수 있습니다.
+                        </span>
+                        <span class="col-auto form-text text-danger"
+                              th:if="${#fields.hasErrors('passwd')}"
+                              th:errors="*{passwd}">
                             6~16 자의 영문 소문자, 숫자와 특수기호(_)만 사용할 수 있습니다.
                         </span>
                     </div>
@@ -60,11 +72,11 @@
                             <input type="password" class="form-control border-danger" id="reppsswd" name="reppsswd">
                         </div>
                         <span class="col-auto form-text" id="repwdmsg">
-                            이전 항목에서 입력했던 비밀번호를 한번 더 입력하세요.
+                            비밀번호를 한번 더 입력하세요.
                         </span>
                     </div>
-                    <div class="row col-11 offset-1 mt-3 align-items-center">
-                        <label class="col-2 form-label text-danger text-end mt-1" for="zip1">우편번호</label>
+                    <div class="row col-11 offset-1 mt-3 text-danger text-end mt-1 align-items-center">
+                        <label class="col-2 form-label" for="zip1">우편번호</label>
                         <div class="col-2">
                             <input type="text" class="form-control border-danger bg-light"
                                    id="zip1" name="zip1" readonly>
@@ -78,11 +90,16 @@
                                 <i class="fas fa-question-circle"></i> 우편번호 찾기</button>
                         </div>
                     </div>
+                    <span class="col text-danger offset-3"
+                          th:if="${#fields.hasErrors('zip1') or #fields.hasErrors('zip2')}"
+                          th:errors="*{zip1}"></span>
                     <div class="row col-11 offset-1 mt-3 align-items-center">
                         <label class="col-2 form-label text-danger text-end mt-1" for="addr1">나머지 주소</label>
                         <div class="col-4">
                             <input type="text" class="form-control border-danger bg-light"
                                    id="addr1" name="addr1" readonly>
+                            <span th:if="${#fields.hasErrors('addr1') or #fields.hasErrors('addr2')}"
+                                  th:errors="*{addr2}" class="text-danger"></span>
                         </div>
                         <div class="col-4">
                             <input type="text" class="form-control border-danger" id="addr2" name="addr2">
@@ -99,6 +116,8 @@
                                 <input type="text" name="email2" id="email2"
                                        class="form-control border-danger bg-light" readonly>
                             </div>
+                            <span class="col text-danger" th:if="${#fields.hasErrors('email1') or #fields.hasErrors('email2')}"
+                                  th:errors="*{email1}"></span>
                         </div>
                         <div class="col-3">
                             <select class="form-select border-danger" id="email3">
@@ -115,14 +134,14 @@
                                for="pnum1">전화번호</label>
                         <div class="col-2">
                             <input type="text" name="pnum1" id="pnum1"
-                                   class="form-control border-danger" th:value="${mb.pnum1}" readonly>
+                                   class="form-control border-danger" th:value="${session.ckm.pnum1}" readonly>
                         </div>
                         <div class="col-2">
                             <input type="text" name="pnum2" id="pnum2"
-                                   class="form-control border-danger" th:value="${mb.pnum2}" readonly> </div>
+                                   class="form-control border-danger" th:value="${session.ckm.pnum2}" readonly> </div>
                         <div class="col-2">
                             <input type="text" name="pnum3" id="pnum3"
-                                   class="form-control border-danger" th:value="${mb.pnum3}" readonly> </div>
+                                   class="form-control border-danger" th:value="${session.ckm.pnum3}" readonly> </div>
                     </div>
 
                     <div class="row col-11 offset-1  align-items-center">
