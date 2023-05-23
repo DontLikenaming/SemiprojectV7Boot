@@ -42,7 +42,7 @@ public class JoinController {
 
         // checkme에서 작성한 이름, 주민번호를 joinme에 보내는 방법 2 - session
         String view = "join/joinme";
-
+        System.out.println(checkme.getName());
         if(br.hasErrors()) view = "join/checkme";
         else
              sess.setAttribute("ckm", checkme);
@@ -50,13 +50,12 @@ public class JoinController {
         return view;
     }
 
-    @PostMapping(value = "/joinme")
-    public ModelAndView joinme(Member mb){
-        System.out.println(mb.getName());
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("join/joinme");
-        mv.addObject("mb", mb);
-        return mv;
+    @GetMapping(value = "/joinme")
+    public String joinme(Model m){
+
+        m.addAttribute("member", new Member());
+
+        return "join/joinme";
     }
 
     @PostMapping(value = "/joinok")

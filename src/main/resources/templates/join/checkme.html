@@ -33,7 +33,7 @@
                         <div class="row">
                             <label class="col-3 col-form-label text-warning text-end" for="name1">이름</label>
                             <div class="col-6">
-                                <input class="form-control border-warning" id="name1" name="name" type="text">
+                                <input class="form-control border-warning" id="name1" name="name1" type="text">
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -105,13 +105,15 @@
         </div>
         <div class="card card-body bg-light mt-5 mx-3">
             <h3 class="mb-4">실명확인 회원가입</h3>
-            <form id="checkfrm2" name="checkfrm2">
+            <form id="checkfrm2" name="checkfrm2" th:object="${checkme}">
                 <div class="row">
                     <div class="col-5 offset-1 mt-4">
                         <div class="row">
                             <label class="col-3 col-form-label text-warning text-end" for="name2">이름</label>
                             <div class="col-6">
-                                <input class="form-control border-warning" id="name2" name="name" type="text">
+                                <input class="form-control border-warning" id="name2" name="name2" type="text">
+                                <span th:if="${#fields.hasErrors('name2')}"
+                                      th:errors="*{name2}" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -124,13 +126,22 @@
                                     <option>032</option>
                                     <option>033</option>
                                 </select>
+                                <span th:if="${#fields.hasErrors('pnum1')}"
+                                      th:errors="*{pnum1}" class="text-danger"></span>
                             </div>
+
                             <div class="col-3">
                                 <input type="text" class="form-control border-warning" id="pnum2" name="pnum2">
+                                <span th:if="${#fields.hasErrors('pnum2')}"
+                                      th:errors="*{pnum2}" class="text-danger"></span>
                             </div>
+
                             <div class="col-3">
                                 <input type="text" class="form-control border-warning" id="pnum3" name="pnum3">
+                                <span th:if="${#fields.hasErrors('pnum3')}"
+                                      th:errors="*{pnum3}" class="text-danger"></span>
                             </div>
+                            <input type="hidden" id="name" name="name" value="">
                         </div>
                         <div class="row mb-2">
                             <label class="col-3 col-form-label">&nbsp;</label>

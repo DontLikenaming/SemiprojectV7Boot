@@ -23,21 +23,16 @@ noagree?.addEventListener("click", () => {
 // ------------------------------------------------------------------- checkme
 const checkpnum = document.querySelector("#checkpnum");
 const checkfrm2 = document.forms.checkfrm2;
+const name2 = document.querySelector("#name2");
+const name = document.querySelector("#name");
 
 let checkbtn2 = document.querySelector("#checkbtn2");
 checkbtn2?.addEventListener("click", () => {
-    if(checkfrm2.name2.value===''
-        || !isNaN(Number.parseInt(name2.value))) alert("이름을 입력해주세요!")
-    else if((checkfrm2.pnum1.value==="국번")
-        || (checkfrm2.pnum2.value==null)
-        || (checkfrm2.pnum3.value==null)) alert("전화번호를 입력해주세요!")
-    else if(isNaN(Number.parseInt(pnum1.value))
-        || isNaN(checkfrm2.pnum2.value)
-        || isNaN(checkfrm2.pnum3.value)) alert("올바른 번호를 입력해주세요!")
-    else if(!checkpnum.checked) alert("개인정보 처리 동의에 체크해주세요!")
+if(!checkpnum.checked) alert("개인정보 처리 동의에 체크해주세요!")
     else {
+        name.value = name2.value;
         checkfrm2.method = 'post';
-        checkfrm2.action="/join/joinme";
+        checkfrm2.action="/join/checkme";
         checkfrm2.submit();
     }
 })
