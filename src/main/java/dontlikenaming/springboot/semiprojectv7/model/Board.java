@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 
@@ -29,8 +30,10 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bno;
 
+    @NotBlank(message = "제목은 필수 입력 항목입니다!") //문자열 길이 0, 빈 문자열(space) 체크
     private String title;
 
+    @NotBlank(message = "작성자는 필수 입력 항목입니다!")
     private String userid;
 
     @Column(insertable = false, updatable = false)
@@ -39,6 +42,7 @@ public class Board {
     @Column(insertable = false, updatable = false)
     private Integer views;
 
+    @NotBlank(message = "본문은 필수 입력 항목입니다!")
     private String content;
 
     @CreatedDate
