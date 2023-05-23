@@ -1,9 +1,13 @@
 package dontlikenaming.springboot.semiprojectv7.controller;
 
+import dontlikenaming.springboot.semiprojectv7.model.Board;
+import dontlikenaming.springboot.semiprojectv7.model.Checkme;
 import dontlikenaming.springboot.semiprojectv7.model.Member;
 import dontlikenaming.springboot.semiprojectv7.service.JoinService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.IOException;
 
 @Controller
@@ -24,12 +30,29 @@ public class JoinController {
     }
 
     @GetMapping(value = "/checkme")
-    public String checkme(){
+    public String checkme(Model m){
+        m.addAttribute("checkme", new Checkme());
         return "join/checkme";
+    }
+
+    @PostMapping(value = "/checkme")
+    public String writeok(@Valid Checkme checkme, BindingResult br, HttpSession sess){
+        // checkme에서 작성한 이름, 전화번호를 joinme에 보내는 방법 1
+        // String view = "join/joinme?name=abc123&Pnum1=02&Pnum2=123&Pnum3=4567";
+
+        // checkme에서 작성한 이름, 주민번호를 joinme에 보내는 방법 2 - session
+        String view = "join/joinme";
+
+        if(br.hasErrors()) view = "join/checkme";
+        else
+             sess.setAttribute("ckm", checkme);
+
+        return view;
     }
 
     @PostMapping(value = "/joinme")
     public ModelAndView joinme(Member mb){
+        System.out.println(mb.getName());
         ModelAndView mv = new ModelAndView();
         mv.setViewName("join/joinme");
         mv.addObject("mb", mb);
