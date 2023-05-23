@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Map;
+
 @Controller
 @RequestMapping(value = "/board")
 public class BoardController {
@@ -17,17 +19,17 @@ public class BoardController {
 
     @GetMapping(value = "/list")
     public ModelAndView list(Integer page){
-        int cntpg = bdsrv.countBoard();
-
         if((page==null)||(page<=0)){page = 1;}
-        else if((page>cntpg)){page = cntpg;}
+        Map<String, Object> bds = bdsrv.readBoard(page);
+
+        System.out.println(bds.get("bdlist"));
 
         ModelAndView mv = new ModelAndView();
         mv.setViewName("board/list");
-        mv.addObject("bdlist", bdsrv.readBoard(page));
+        mv.addObject("bdlist", bds.get("bdlist"));
         mv.addObject("page", page);
         mv.addObject("stpg", (page-1)/10*10+1);
-        mv.addObject("cntpg", cntpg);
+        mv.addObject("cntpg", bds.get("cntpg"));
 
         return mv;
     }
@@ -65,10 +67,8 @@ public class BoardController {
     }
 
     @GetMapping(value = "/view")
-    public ModelAndView view(int bno){
-        int allviews = bdsrv.countAllBoard();
-        if(bno==0){bno = 1;}
-        else if(bno>allviews){bno = allviews;}
+    public ModelAndView view(Integer bno){
+        if((bno==null)||(bno<=0)){bno = 1;}
 
         ModelAndView mv = new ModelAndView();
         mv.addObject("bd", bdsrv.readOneBoard(bno));

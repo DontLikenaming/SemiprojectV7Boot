@@ -17,15 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 //public interface BoardRepository extends JpaRepository<Board, Long> {
 public interface BoardRepository extends PagingAndSortingRepository<Board, Long> {
 
-    @Query("select max(b.bno) from Board b")
-    Long find();
-
     // BoardRepository에서는 DML은 지원하지 않음
     // @Modifying, @Transactional을 추가하여 사용 가능
     @Modifying
     @Transactional
     @Query("update Board set views = views + 1 where bno = :bno")
     int countViewBoard(@Param("bno") Long bno);
+
+    Long countBoardBy();
 
     Page<Board> findByTitleContains(Pageable pageable, @Param("title") String title);
 
@@ -42,6 +41,4 @@ public interface BoardRepository extends PagingAndSortingRepository<Board, Long>
     Long countBnoByUserid(@Param("userid") String userid);
 
     Long countBnoByTitleContainsOrContentContains(@Param("title") String title, @Param("content") String content);
-
-    int countBoardBy();
 }
