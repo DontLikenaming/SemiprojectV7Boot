@@ -41,8 +41,7 @@ public class JoinController {
         // String view = "join/joinme?name=abc123&Pnum1=02&Pnum2=123&Pnum3=4567";
 
         // checkme에서 작성한 이름, 주민번호를 joinme에 보내는 방법 2 - session
-        String view = "join/joinme";
-        System.out.println(checkme.getName());
+        String view = "redirect:/join/joinme";
         if(br.hasErrors()) view = "join/checkme";
         else
              sess.setAttribute("ckm", checkme);
@@ -58,16 +57,22 @@ public class JoinController {
         return "join/joinme";
     }
 
-    @PostMapping(value = "/joinok")
-    public String joinok(Member m, String grecaptcha){
-        String view = "error";
-        grecaptcha = null;
+    @PostMapping(value = "/joinme")
+    public String joinmeok(@Valid Member member, BindingResult br, HttpSession sess){
+        String view = "redirect:/join/joinok";
 
-        if(jnsrv.newMember(m)){
-            view = "join/joinok";
+        if(br.hasErrors()) view = "join/joinme";
+        else {
+            jnsrv.newMember(member);
+            sess.invalidate();
         }
 
         return view;
+    }
+
+    @GetMapping(value = "/joinok")
+    public String joinok(){
+        return "join/joinok";
     }
 
     // 우편번호 검색
