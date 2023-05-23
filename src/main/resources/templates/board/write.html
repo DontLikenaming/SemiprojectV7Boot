@@ -23,12 +23,15 @@
                 </button>
             </div>
             <div class="row offset-2 col-8 mt-3">
-                <form class="card card-body bg-light" name="bdfrm" id="bdfrm">
+                <form class="card card-body bg-light" th:object="${board}"
+                      name="bdfrm" id="bdfrm">
                     <div class="row">
                         <label class="col-3 col-form-label text-danger text-end" for="title">제목</label>
                         <div class="col-7">
                             <input type="text" class="form-control border-danger"
                                    id="title" name="title">
+                            <p th:if="${#fields.hasErrors('title')}"
+                            th:errors="*{title}"></p>
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -36,6 +39,8 @@
                         <div class="col-7">
                             <input type="text" class="form-control border-danger bg-light"
                                    id="userid" name="userid" th:value="${session.UID}" readonly>
+                            <p th:if="${#fields.hasErrors('userid')}"
+                               th:errors="*{userid}"></p>
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -43,6 +48,8 @@
                         <div class="col-7">
                         <textarea class="form-control border-danger"
                                   id="content" name="content" rows="15"></textarea>
+                            <p th:if="${#fields.hasErrors('content')}"
+                               th:errors="*{content}"></p>
                         </div>
                     </div>
                     <div class="row mt-2">
