@@ -9,9 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Controller
@@ -44,9 +43,12 @@ public class PilotController {
             String uuid = UUID.randomUUID().toString().replace("-", "");    // uuid에서 "-" 제거
 
             // 파일명 중복을 막기 위해 유니크한 값 생성 2
-            String fmt = "yyyyMMddHHmmss";
+            /*String fmt = "yyyyMMddHHmmss";
             SimpleDateFormat sdf = new SimpleDateFormat(fmt);
-            uuid = sdf.format(new Date());
+            uuid = sdf.format(new Date());*/
+            uuid = LocalDate.now() + "" + LocalTime.now();
+            uuid = uuid.replace("-", "").replace(":", "")
+                    .replace(".", "");
 
             // 파일명과 확장자 사이에 생성된 값 넣기
             String filename = attach.getOriginalFilename();
