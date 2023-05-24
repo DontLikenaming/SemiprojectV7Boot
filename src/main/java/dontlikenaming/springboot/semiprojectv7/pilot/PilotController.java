@@ -38,17 +38,22 @@ public class PilotController {
             m.addAttribute("filesize", attach.getSize()/1024);
 
             // 파일명 중복을 막기 위해 유니크한 값 생성 1
-            UUID uuid = UUID.randomUUID();
-            String fname = attach.getOriginalFilename();
-            String fnames[] = fname.split("[.]");
-            fname = fnames[0] + uuid + "." + fnames[1];
+            String uuid = UUID.randomUUID().toString().replace("-", "");    // uuid에서 "-" 제거
             m.addAttribute("uuid", uuid);
 
             // 파일명 중복을 막기 위해 유니크한 값 생성 2
 
 
+            // 파일명과 확장자 사이에 생성된 값 넣기
+            String filename = attach.getOriginalFilename();
+
+            String fname = filename.substring(0, filename.lastIndexOf("."));
+            String fileExt = filename.substring(filename.lastIndexOf(".") + 1);
+            filename = fname + uuid + "." + fileExt;
+
+
             // 업로드 한 파일 저장하기
-            attach.transferTo(new File("C:/Java/bootUpload/" + fname));
+            attach.transferTo(new File("C:/Java/bootUpload/" + filename));
         }
 
         return "pilot/list";
