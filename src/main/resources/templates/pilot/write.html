@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/template}">
+<th:block layout:fragment="content">
+    <div class="main">
+        <div class="mt-4">
+            <i class="fa-solid fa-file-arrow-up fa-2xl"> 파일럿 프로그램</i>
+            <hr>
+        </div>
+        <div class="row mt-5 mb-3">
+            <div class="row offset-2 col-4">
+                <h4><i class="fa fa-plus-circle"> 파일 업로드</i></h4>
+            </div>
+            <div class="col-4 text-end">
+                <button type="button" class="btn btn-light" id="go2board" name="go2board">
+                    <i class="fa fa-list"> 목록으로</i>
+                </button>
+            </div>
+            <div class="row offset-2 col-8 mt-3">
+                <form class="card card-body bg-light" name="pfrm" id="pfrm">
+                    <div class="row">
+                        <label class="col-3 col-form-label text-danger text-end" for="title">제목</label>
+                        <div class="col-7">
+                            <input type="text" class="form-control border-danger"
+                                   id="title" name="title">
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-3 col-form-label text-danger text-end" for="userid">작성자</label>
+                        <div class="col-7">
+                            <input type="text" class="form-control border-danger bg-light"
+                                   id="userid" name="userid" readonly>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-3 col-form-label text-danger text-end" for="content">본문</label>
+                        <div class="col-7">
+                        <textarea class="form-control border-danger"
+                                  id="content" name="content" rows="15"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-3 col-form-label text-danger text-end" for="attach">첨부 파일</label>
+                        <div class="col-7">
+                            <input type="file" class="form-control border-danger bg-light"
+                                   id="attach" name="attach">
+                        </div>
+                    </div>
+
+                    <div class="row mt-5 justify-content-center">
+                        <hr class="w-75">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary"
+                                    id="writebtn" name="writebtn">
+                                <i class="fa fa-check"> 업로드하기</i>
+                            </button>
+                            <button type="button" class="btn btn-danger"
+                                    id="cancelbtn" name="cancelbtn">
+                                <i class="fa fa-remove"> 취소하기</i>
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let pfrm = document.forms.pfrm;
+        let go2board = document.querySelector("#go2board");
+        let writebtn = document.querySelector("#writebtn");
+
+        writebtn?.addEventListener("click",()=>{
+            if(pfrm.title.value===''){ alert("제목을 입력해주세요!") }
+            else if(pfrm.content.value===''){ alert("본문을 입력해주세요!") }
+            else {
+                pfrm.method = "post";
+                pfrm.enctype = "multipart/form-data";
+                pfrm.submit();
+            }
+        })
+
+        go2board?.addEventListener("click",()=>{
+            location.href = "../../pilot/list";
+        })
+
+    </script>
+</th:block>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/template}">
+<th:block layout:fragment="content">
+    <div class="main">
+        <div class="mt-4">
+            <i class="fa-solid fa-file-arrow-up fa-2xl"> 파일럿 프로그램</i>
+            <hr>
+        </div>
+        <div>
+            <p th:text="${title}"></p>
+            <p th:text="${content}"></p>
+            <p th:if="${attach} ne null" th:text="${attach}"></p>
+            <div th:unless="${attach} ne null">
+                <p th:text="${filename}"></p>
+                <p th:text="${filetype}"></p>
+                <p th:text="${filesize}+KB"></p>
+            </div>
+        </div>
+
+
+        <button type="button" class="btn btn-light" id="go2upload" name="go2upload">
+            <i class="fa-solid fa-file-arrow-up"> 업로드</i>
+        </button>
+    </div>
+
+    <script>
+        let go2upload = document.querySelector("#go2upload");
+        go2upload?.addEventListener("click",()=>{
+            location.href = "../../pilot/write";
+        })
+    </script>
+</th:block>
+</html>
