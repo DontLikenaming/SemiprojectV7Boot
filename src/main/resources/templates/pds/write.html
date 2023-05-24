@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/template}">
+<th:block layout:fragment="content">
+<!--    <th:block th:if="${#strings.isEmpty(session.UID)}">
+        <script>location.href = "/";</script>
+    </th:block>-->
+    <div class="main">
+        <script src="https://www.google.com/recaptcha/api.js"></script>
+        <div class="mt-4">
+            <i class="fa-solid fa-file-arrow-up fa-2xl"> 자료실</i>
+            <hr>
+        </div>
+        <div class="row mt-5 mb-3">
+            <div class="row offset-2 col-4">
+                <h4><i class="fa fa-file-circle-plus"> 새 글 쓰기</i></h4>
+            </div>
+            <div class="col-4 text-end">
+                <button type="button" class="btn btn-light" id="go2board" name="go2board">
+                    <i class="fa fa-list"> 목록으로</i>
+                </button>
+            </div>
+            <div class="row offset-2 col-8 mt-3">
+                <form class="card card-body bg-light" th:object="${pds}" name="pdsfrm" id="pdsfrm">
+                    <div class="row">
+                        <label class="col-3 col-form-label text-danger text-end" for="title">제목</label>
+                        <div class="col-7">
+                            <input type="text" class="form-control border-danger"
+                                   id="title" name="title">
+                            <span th:if="${#fields.hasErrors('title')}"
+                            th:errors="*{title}" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <label class="col-3 col-form-label text-danger text-end" for="userid">작성자</label>
+                        <div class="col-7">
+                            <input type="text" class="form-control border-danger bg-light"
+                                   id="userid" name="userid" th:value="${session.UID}" readonly>
+                            <span th:if="${#fields.hasErrors('userid')}"
+                               th:errors="*{userid}" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <label class="col-3 col-form-label text-danger text-end" for="content">본문</label>
+                        <div class="col-7">
+                        <textarea class="form-control border-danger"
+                                  id="content" name="content" rows="15"></textarea>
+                            <span th:if="${#fields.hasErrors('content')}"
+                               th:errors="*{content}" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <label class="col-3 col-form-label text-danger text-end" for="attach">첨부 파일</label>
+                        <div class="col-7">
+                            <input type="file" class="form-control border-danger bg-light"
+                                   id="attach" name="attach">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <label class="col-3 col-form-label text-danger text-end" for="g-recaptcha">자동 가입 방지</label>
+                        <div class="col-7">
+                            <div class="g-recaptcha" data-sitekey="6LdD4OskAAAAAH6Uazf4s8YBShdvsgMUbU5KkmDK"></div>
+                            <input type="hidden" name="grecaptcha" id="grecaptcha">
+                        </div>
+                    </div>
+
+                    <div class="row mt-5 justify-content-center">
+                        <hr class="w-75">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary"
+                                    id="writebtn" name="writebtn">
+                                <i class="fa fa-check"> 입력 완료</i>
+                            </button>
+                            <button type="button" class="btn btn-danger"
+                                    id="cancelbtn" name="cancelbtn">
+                                <i class="fa fa-remove"> 취소하기</i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/assets/js/pds.js"></script>
+</th:block>
+</html>
