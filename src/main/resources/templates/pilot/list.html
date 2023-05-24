@@ -12,14 +12,24 @@
             <p th:text="${title}"></p>
             <p th:text="${content}"></p>
             <p th:if="${attach} ne null" th:text="${attach}"></p>
-            <div th:unless="${attach} ne null">
-                <p th:text="${filename}"></p>
-                <p th:text="${filetype}"></p>
-                <p th:text="${filesize}+KB"></p>
-                <p th:text="${uuid}"></p>
-            </div>
+            <p th:text="${filename}"></p>
+            <p th:text="${filetype}"></p>
+            <p th:text="${filesize}"></p>
+            <p th:text="${uuid}"></p>
+
         </div>
 
+        <div>
+            <p><a href="/pilot/down?pno=1">이미지</a></p>
+            <p><a href="/pilot/down?pno=2">HTML</a></p>
+            <p><a href="/pilot/down?pno=3">압축파일</a></p>
+        </div>
+
+        <div>
+            <p><a href="/assets/pilot/멍멍이.jpg">이미지</a></p>
+            <p><a href="/assets/pilot/01hellojs.html">HTML</a></p>
+            <p><a href="/assets/pilot/zipcode_20130201.zip">압축파일</a></p>
+        </div>
 
         <button type="button" class="btn btn-light" id="go2upload" name="go2upload">
             <i class="fa-solid fa-file-arrow-up"> 업로드</i>

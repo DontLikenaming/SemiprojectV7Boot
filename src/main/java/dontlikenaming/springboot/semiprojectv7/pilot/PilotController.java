@@ -1,14 +1,22 @@
 package dontlikenaming.springboot.semiprojectv7.pilot;
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
@@ -69,5 +77,30 @@ public class PilotController {
     @GetMapping("/list")
     public String list(){
         return "pilot/list";
+    }
+
+    @GetMapping("/down")
+    public ResponseEntity<Resource> down(int pno) throws IOException {
+        String fname = "";
+        String savePath = "C:/Java/bootUpload/";
+
+        if(pno == 1) fname = "멍멍이.jpg";
+        else if(pno == 2) fname = "01hellojs.html";
+        else if(pno == 3) fname = "zipcode_20130201.zip";
+
+        // 파일 이름에 한글이 포함되면 글자가 깨지므로 적절한 인코딩 작업 수행
+        fname = UriUtils.encode(fname, StandardCharsets.UTF_8);
+
+        // 다운로드 할 파일 객체 생성
+        UrlResource resource = new UrlResource("file:"+(savePath+fname));
+
+        // MIME 타입 지정
+        // 브라우저에 다운로드할 파일에 대한 정보 제공
+        HttpHeaders header = new HttpHeaders();
+        header.add("Content-Type", Files.probeContentType(Paths.get(savePath+fname)));
+        header.add("Content-Disposition", "attachment; filename=" + fname);
+
+        // 브라우저로 파일 전송하기
+        return ResponseEntity.ok().headers(header).body(resource);
     }
 }
