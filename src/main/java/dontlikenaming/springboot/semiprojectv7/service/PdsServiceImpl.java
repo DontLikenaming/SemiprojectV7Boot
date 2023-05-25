@@ -5,11 +5,13 @@ import dontlikenaming.springboot.semiprojectv7.model.Pds;
 import dontlikenaming.springboot.semiprojectv7.model.PdsAttach;
 import dontlikenaming.springboot.semiprojectv7.utils.PdsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service("pdssrv")
@@ -57,6 +59,23 @@ public class PdsServiceImpl implements PdsService{
     }
 
     @Override
+    public HttpHeaders getHeader(String fname) {
+        return pdsUtils.getHeader(fname);
+    }
+
+    @Override
+    public UrlResource getResource(String fname, String uuid) {
+        UrlResource urlResource = pdsUtils.getResouce(fname, uuid);
+        if(urlResource.exists()) {
+            pdsdao.updateAttech(fname);
+            return urlResource;
+        }
+
+        return null;
+    }
+
+
+    @Override
     public Map<String, Object> readPds(Integer page, String ftype, String fkey) {
         int stdno = (page-1);
 
@@ -68,4 +87,9 @@ public class PdsServiceImpl implements PdsService{
 
         return pdsdao.selectPds(params);
     }
+
+/*    @Override
+    public Map<String, Object> downAttach(Integer pno) {
+        return pdsdao.downAttach(pno);
+    }*/
 }
