@@ -102,7 +102,7 @@ public class PdsController {
         String uuid = pdssrv.readOnePds(pno).getUuid();
 
         // 알아낼 uuid와 파일명을 이용해서 header와 리소스 객체 생성
-        HttpHeaders header = pdssrv.getHeader(fname, uuid);
+        HttpHeaders header = pdssrv.getHeader(fname);
         UrlResource resource = pdssrv.getResource(fname, uuid);
 
         return ResponseEntity.ok().headers(header).body(resource);
