@@ -83,4 +83,26 @@ public class PdsDAOImpl implements PdsDAO{
     public PdsAttach selectAttech(Integer pno) {
         return attachRepository.findPdsattachByPno(pno);
     }
+
+    @Override
+    public Boolean updateAttech(String fname){
+        boolean result = false;
+        if(pdsRepository.countFdownPds(fname)>0) result = true;
+
+        return result;
+    }
+
+/*    @Override
+    public Map<String, Object> downAttach(Integer pno){
+        String fname = attachRepository.findFnameByPno(pno).getFname();
+        String uuid = pdsRepository.findUuidByPno((long) pno).getUuid();
+        pdsRepository.countFdownPds(pno);
+
+        Map<String, Object> pds = new HashMap<>();
+        pds.put("fname", fname);
+        pds.put("uuid", uuid);
+
+        return pds;
+    }*/
+
 }

@@ -16,5 +16,10 @@ public interface PdsDAO {
     Pds selectOnePds(Integer bno);
 
     int insertAttach(PdsAttach pa);
+
     PdsAttach selectAttech(Integer pno);
+
+    Boolean updateAttech(String fname);
+
+/*    Map<String, Object> downAttach(Integer pno);*/
 }

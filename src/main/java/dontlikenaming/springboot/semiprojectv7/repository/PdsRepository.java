@@ -30,4 +30,13 @@ public interface PdsRepository extends PagingAndSortingRepository<Pds, Long> {
     Page<Pds> findByTitleContainsOrContentContains(PageRequest paging, @Param("title") String title, @Param("content") String content);
 
     Pds findPdsByPno(long pno);
+
+    @Modifying
+    @Transactional
+    @Query("update PdsAttach set fdown = fdown + 1 where fname = :fname")
+    int countFdownPds(@Param("fname") String fname);
+
+/*    Pds findUuidByPno(long pno);*/
+
+
 }

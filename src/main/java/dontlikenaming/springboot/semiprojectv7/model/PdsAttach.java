@@ -34,7 +34,7 @@ public class PdsAttach {
     private String fsize;
 
     @Column(insertable = false, updatable = false)
-    private String fdown;
+    private Integer fdown;
 
     private Integer pno;
 }

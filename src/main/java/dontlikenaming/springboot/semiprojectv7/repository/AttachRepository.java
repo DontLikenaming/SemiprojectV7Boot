@@ -4,9 +4,8 @@ import dontlikenaming.springboot.semiprojectv7.model.PdsAttach;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
-
 public interface AttachRepository extends PagingAndSortingRepository<PdsAttach, Long> {
+   PdsAttach findPdsattachByPno(@Param("pno") Integer pno);
 
-    List<PdsAttach> findPdsattachBypno(@Param("pno") Long pno);
+/*   String findFnameByPno(@Param("pno") Integer pno);*/
 }
