@@ -24,3 +24,7 @@ let newbtn = document.querySelector("#newbtn");
 newbtn?.addEventListener("click",()=>{
     location.href = "../../pds/write";
 })
+// ------------------------------------------------------------------- view
+listbtn?.addEventListener("click",()=>{
+    location.href = "../../pds/list";
+})
