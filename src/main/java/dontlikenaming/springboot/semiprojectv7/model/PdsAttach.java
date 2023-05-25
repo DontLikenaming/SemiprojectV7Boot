@@ -6,12 +6,8 @@ import lombok.ToString;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 
 @Entity
@@ -37,4 +33,7 @@ public class PdsAttach {
     private Integer fdown;
 
     private Integer pno;
+
+    @Transient
+    private String picext;
 }

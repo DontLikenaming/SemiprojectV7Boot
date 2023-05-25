@@ -12,6 +12,8 @@ import java.util.Map;
 public interface PdsService {
     Map<String, Object> readPds(Integer cpage);
 
+    List<String> readFtype();
+
     Map<String, Object> readPds(Integer cpage, String ftype, String fkey);
 
     Map<String, Object> newPds(Pds pds);

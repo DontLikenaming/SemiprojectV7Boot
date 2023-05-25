@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service("pdssrv")
@@ -22,6 +23,11 @@ public class PdsServiceImpl implements PdsService{
     @Override
     public Map<String, Object> readPds(Integer cpage) {
         return pdsdao.selectPds(cpage);
+    }
+
+    @Override
+    public List<String> readFtype(){
+        return pdsdao.selectFtype();
     }
 
     @Override
@@ -87,9 +93,4 @@ public class PdsServiceImpl implements PdsService{
 
         return pdsdao.selectPds(params);
     }
-
-/*    @Override
-    public Map<String, Object> downAttach(Integer pno) {
-        return pdsdao.downAttach(pno);
-    }*/
 }

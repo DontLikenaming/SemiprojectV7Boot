@@ -39,6 +39,7 @@
                 </tr>
                 <tr>
                     <td class="vinfo" colspan="2">
+                        <img th:src="|/assets/img/ftype/${attach.picext}.png|">
                         <a th:href="|/pds/down?pno=${attach.getPno()}|" th:text="${attach.fname}"></a>
                         <span th:text="|(${attach.fsize} KB / ${attach.fdown}회 다운로드)|"></span>
                     </td>

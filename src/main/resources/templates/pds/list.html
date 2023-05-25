@@ -40,19 +40,20 @@
                     <th style="width: 7%">번호</th>
                     <th>제목</th>
                     <th style="width: 13%">작성자</th>
-                    <th style="width: 13%">작성일</th>
-                    <th style="width: 5%">첨부</th>
+                    <th style="width: 11%">작성일</th>
+                    <th style="width: 7%">첨부</th>
                     <th style="width: 7%">추천</th>
                     <th style="width: 7%">조회</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="pds: ${pdslist}">
+                <tr th:each="pds, stat: ${pdslist}">
                     <td th:text="${pds.pno}"></td>
                     <td><a th:href="|/pds/view?pno=${pds.pno}|" class="bdlink" th:text="${pds.title}">&nbsp;</a></td>
                     <td th:text="${pds.userid}"></td>
                     <td th:text="${#strings.substring(pds.regdate, 0, 10)}"></td>
-                    <td>&nbsp;</td>
+                    <td><img th:src="|/assets/img/ftype/${ftypes[__${stat.index}__]}.png|"
+                             style="width:30px; height:30px;"></td>
                     <td th:text="${pds.thumbs}"></td>
                     <td th:text="${pds.views}"></td>
                 </tr>

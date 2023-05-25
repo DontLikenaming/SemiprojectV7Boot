@@ -17,29 +17,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.UriUtils;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/pds")
 public class PdsController {
     @Autowired private PdsService pdssrv;
-    @Autowired private PdsUtils pdsUtils;
 
     @GetMapping(value = "/list")
     public ModelAndView list(Integer page){
         if((page==null)||(page<=0)){page = 1;}
         Map<String, Object> pds = pdssrv.readPds(page);
+        List<String> ftypes = pdssrv.readFtype();
 
         ModelAndView mv = new ModelAndView();
         mv.setViewName("pds/list");
         mv.addObject("pdslist", pds.get("pdslist"));
+        mv.addObject("ftypes", ftypes);
         mv.addObject("page", page);
         mv.addObject("stpg", (page-1)/10*10+1);
         mv.addObject("cntpg", pds.get("cntpg"));
@@ -82,20 +80,6 @@ public class PdsController {
 
     @GetMapping("/down")
     public ResponseEntity<Resource> down(int pno) throws IOException {
-/*        Map<String, Object> pds = pdssrv.downAttach(pno);
-        String fname = (String) pds.get("fname");
-        String uuid = (String) pds.get("uuid");
-        String savePath = "C:/Java/bootUpload/";
-
-        String filename = pdsUtils.makeFname(fname, uuid);
-
-        UrlResource resource = new UrlResource("file:"+(savePath+filename));
-
-        filename = UriUtils.encode(fname, StandardCharsets.UTF_8);
-
-        HttpHeaders header = new HttpHeaders();
-        header.add("Content-Type", Files.probeContentType(Paths.get(savePath+filename)));
-        header.add("Content-Disposition", "attachment; filename=" + filename);*/
 
         // 업로드 파일의 uuid와 파일명 알아내기
         String fname = pdssrv.readOneAttach(pno).getFname();

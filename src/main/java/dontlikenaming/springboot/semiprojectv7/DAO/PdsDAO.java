@@ -9,6 +9,8 @@ import java.util.Map;
 public interface PdsDAO {
     Map<String, Object> selectPds(int cpage);
 
+    List<String> selectFtype();
+
     int insertPds(Pds pds);
 
     Map<String, Object> selectPds(Map<String, Object> params);

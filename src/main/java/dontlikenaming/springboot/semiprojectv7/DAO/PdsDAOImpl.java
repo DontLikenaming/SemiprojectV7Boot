@@ -10,7 +10,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository("pdsdao")
@@ -24,11 +26,33 @@ public class PdsDAOImpl implements PdsDAO{
     public Map<String, Object> selectPds(int cpage) {
         PageRequest paging = PageRequest.of(cpage-1,10, Sort.by("pno").descending());
 
+
         Map<String, Object> pds = new HashMap<>();
         pds.put("pdslist", pdsRepository.findAll(paging).getContent());
         pds.put("cntpg", pdsRepository.findAll(paging).getTotalPages());
 
+
         return pds;
+    }
+
+    @Override
+    public List<String> selectFtype(){
+        List<String> ftypes = attachRepository.findbyFtypes();
+        List<String> result = new ArrayList<>();
+
+        for(String ftype : ftypes) {
+            switch (ftype){
+                case "jpg" : result.add("pic"); break;
+                case "png" : result.add("pic"); break;
+                case "csv" : result.add("txt"); break;
+                case "txt" : result.add("txt"); break;
+                case "zip" : result.add("zip"); break;
+
+                default: result.add("default"); break;
+            }
+        }
+
+        return result;
     }
 
     @Override
@@ -81,7 +105,19 @@ public class PdsDAOImpl implements PdsDAO{
 
     @Override
     public PdsAttach selectAttech(Integer pno) {
-        return attachRepository.findPdsattachByPno(pno);
+        PdsAttach pa = attachRepository.findPdsattachByPno(pno);
+        switch (pa.getFtype()){
+            case "jpg" :
+            case "png" : pa.setPicext("pic"); break;
+
+            case "csv" :
+            case "txt" : pa.setPicext("txt"); break;
+
+            case "zip" : pa.setPicext("zip"); break;
+
+            default: pa.setPicext("default"); break;
+        }
+        return pa;
     }
 
     @Override
