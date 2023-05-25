@@ -45,9 +45,28 @@ public class PdsController {
     public String writeok(@Valid Pds pds, BindingResult br, MultipartFile attach){
         String view = "pds/write";
 
-        int pno = pdssrv.newPds(pds);
-        if(pdssrv.newPdsAttach(attach, pno))view = "redirect:/pds/list";
+        if(!br.hasErrors()){
+            Map<String, Object> pinfo = pdssrv.newPds(pds);
+
+            if (!attach.isEmpty()) { // 첨부파일이 존재한다면
+                pdssrv.newPdsAttach(attach, pinfo);
+            }
+
+            view = "redirect:/pds/list";
+        }
 
         return view;
+    }
+
+    @GetMapping(value = "/view")
+    public ModelAndView view(Integer pno){
+        if((pno==null)||(pno<=0)){pno = 1;}
+
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("pds", pdssrv.readOnePds(pno));
+        mv.addObject("attach", pdssrv.readOneAttach(pno));
+        mv.setViewName("pds/view");
+
+        return mv;
     }
 }
