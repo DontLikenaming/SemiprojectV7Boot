@@ -28,4 +28,6 @@ public interface PdsRepository extends PagingAndSortingRepository<Pds, Long> {
     Page<Pds> findByUserid(PageRequest paging, @Param("userid") String userid);
 
     Page<Pds> findByTitleContainsOrContentContains(PageRequest paging, @Param("title") String title, @Param("content") String content);
+
+    Pds findPdsByPno(long pno);
 }

@@ -4,7 +4,6 @@ import dontlikenaming.springboot.semiprojectv7.model.Pds;
 import dontlikenaming.springboot.semiprojectv7.model.PdsAttach;
 import dontlikenaming.springboot.semiprojectv7.repository.AttachRepository;
 import dontlikenaming.springboot.semiprojectv7.repository.PdsRepository;
-import dontlikenaming.springboot.semiprojectv7.utils.PdsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,7 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Repository("pdsdao")
@@ -20,7 +18,7 @@ public class PdsDAOImpl implements PdsDAO{
 
     @Autowired PdsRepository pdsRepository;
     @Autowired AttachRepository attachRepository;
-    @Autowired PdsUtils pdsUtils;
+
 
     @Override
     public Map<String, Object> selectPds(int cpage) {
@@ -35,8 +33,12 @@ public class PdsDAOImpl implements PdsDAO{
 
     @Override
     public int insertPds(Pds pds) {
-        pds.setUuid(pdsUtils.makeUUID());
         return Math.toIntExact(pdsRepository.save(pds).getPno());
+    }
+
+    @Override
+    public int insertAttach(PdsAttach pa) {
+        return Math.toIntExact(attachRepository.save(pa).getPano());
     }
 
     @Override
@@ -72,25 +74,13 @@ public class PdsDAOImpl implements PdsDAO{
 
     @Override
     public Pds selectOnePds(Integer pno) {
-        int cntpg = Math.toIntExact(pdsRepository.countPdsBy());
-        if(pno>cntpg)pno=cntpg;
-
         pdsRepository.countViewPds((long) pno);
 
-        return pdsRepository.findById((long) pno).get();
+        return pdsRepository.findPdsByPno((long) pno);
     }
 
     @Override
-    public boolean insertAttach(PdsAttach pa) {
-        boolean result = false;
-        attachRepository.save(pa);
-        if(Math.toIntExact(attachRepository.save(pa).getPano())>0)result = true;
-
-        return result;
-    }
-
-    @Override
-    public List<PdsAttach> selectAttech(Integer pno) {
-        return attachRepository.findPdsattachBypno((long)pno);
+    public PdsAttach selectAttech(Integer pno) {
+        return attachRepository.findPdsattachByPno(pno);
     }
 }

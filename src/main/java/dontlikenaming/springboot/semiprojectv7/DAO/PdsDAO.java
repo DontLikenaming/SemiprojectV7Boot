@@ -15,6 +15,6 @@ public interface PdsDAO {
 
     Pds selectOnePds(Integer bno);
 
-    boolean insertAttach(PdsAttach pa);
-    List<PdsAttach> selectAttech(Integer pno);
+    int insertAttach(PdsAttach pa);
+    PdsAttach selectAttech(Integer pno);
 }
