@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/template}">
+<th:block layout:fragment="content">
+    <div class="mt-4">
+        <i class="fa-solid fa-file-lines fa-2xl"> 게시글 보기</i>
+        <hr>
+    </div>
+
+    <div class="row mt-5 mb-3">
+        <div class="row offset-2 col-4">
+            <button type="button" class="btn btn-light col-4" id="prebtn" name="prebtn">
+                <i class="fa fa-chevron-left"> 이전 글</i>
+            </button>
+            <button type="button" class="btn btn-light col-4" id="nextbtn" name="nextbtn">
+                <i class="fa fa-chevron-right"> 다음 글</i>
+            </button>
+        </div>
+
+        <div class="col-4 text-end">
+            <th:block th:if="${not #strings.isEmpty(session.UID)}">
+                <button type="button" class="btn btn-success" id="newbtn" name="newbtn">
+                    <i class="fa fa-plus-circle"> 새 글 쓰기</i>
+                </button>
+            </th:block>
+        </div>
+
+        <div class="row offset-2 col-8 mt-3">
+            <table>
+                <tr><th class="vtit" colspan="2" th:text="${pds.title}">&nbsp;</th></tr>
+                <tr class="vinfo">
+                    <td class="text-start" th:text="${pds.userid}">&nbsp;</td>
+                    <td class="text-end" th:text="|${pds.regdate} / ${pds.thumbs} / ${pds.views}|">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="vcont" colspan="2" th:text="${pds.content}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="vinfo" colspan="2">
+                        <a th:href="|/pds/down?pno=${attach.getPno()}|" th:text="${attach.fname}"></a>
+                        <span th:text="|(${attach.fsize} KB / ${attach.fdown}회 다운로드)|"></span>
+                    </td>
+                </tr>
+            </table>
+            <input type="hidden" id="bno" name="bno" value="">
+        </div>
+
+        <div class="row offset-2 mt-5">
+            <div class="row col-4">
+        &nbsp;        <th:block th:if="${session.UID eq pds.userid}">
+                    <button type="button" class="btn btn-warning col-4"
+                            id="updbtn" name="updbtn">
+                        <i class="fa fa-pencil">수정하기</i>
+                    </button>
+                    <button type="button" class="btn btn-danger col-4"
+                            id="rmvbtn" name="rmvbtn">
+                        <i class="fa fa-trash-o">삭제하기</i>
+                    </button>
+                </th:block>
+            </div>
+            <div class="col-4 text-end">
+                <button type="button" class="btn btn-light" id="listbtn" name="listbtn">
+                    <i class="fa fa-list"> 목록으로</i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/assets/js/pds.js"></script>
+
+</th:block>
+</html>
