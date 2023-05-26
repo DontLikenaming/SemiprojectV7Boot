@@ -32,4 +32,6 @@ public interface PdsService {
     List<PdsReply> readPdsReply(Integer pno);
 
     boolean newPdsReply(PdsReply pry);
+
+    boolean newPdsRreply(PdsReply pry);
 }

@@ -12,11 +12,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 @Repository("pdsdao")
 public class PdsDAOImpl implements PdsDAO{
@@ -141,9 +141,26 @@ public class PdsDAOImpl implements PdsDAO{
 
     @Override
     public boolean insertPdsReply(PdsReply pry) {
+        // 댓글을 저장할 땐 생성되지 않은 댓글번호를
+        // refno에도 저장하기 위해 update 호출함
+
         boolean result = false;
         if(pdsReplyRepository.save(pry).getRpno()>0){
             pdsReplyRepository.updateRefno(Math.toIntExact(pry.getRpno()));
+            result = true;
+        }
+        return result;
+    }
+
+    @Override
+    public boolean insertPdsRreply(PdsReply pry) {
+        // 대댓글을 저장할 때에는 이미 링크로
+        // 댓글번호를 전달받았기 때문에
+        // update를 호출하지 않고 바로 처리함
+
+        boolean result = false;
+
+        if(pdsReplyRepository.save(pry).getRpno()>0){
             result = true;
         }
         return result;

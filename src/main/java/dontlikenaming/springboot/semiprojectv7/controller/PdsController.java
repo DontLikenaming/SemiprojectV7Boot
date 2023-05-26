@@ -103,4 +103,17 @@ public class PdsController {
         }
         return view;
     }
+
+    @PostMapping("rreplyok")
+    public String rreplyok(@Valid PdsReply pry, BindingResult br){
+        String view;
+
+        if(!br.hasErrors()&&pdssrv.newPdsRreply(pry)) {
+            view = "redirect:/pds/view?pno="+pry.getPno();
+        } else {
+            view = "error";
+        }
+
+        return view;
+    }
 }

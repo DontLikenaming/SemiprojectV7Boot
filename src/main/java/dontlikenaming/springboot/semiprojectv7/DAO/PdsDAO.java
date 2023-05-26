@@ -27,4 +27,6 @@ public interface PdsDAO {
     List<PdsReply> selectPdsReply(Integer pno);
 
     boolean insertPdsReply(PdsReply pry);
+
+    boolean insertPdsRreply(PdsReply pry);
 }

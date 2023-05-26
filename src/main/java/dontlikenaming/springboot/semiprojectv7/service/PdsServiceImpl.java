@@ -92,6 +92,16 @@ public class PdsServiceImpl implements PdsService{
         return pdsdao.insertPdsReply(pry);
     }
 
+    @Override
+    public boolean newPdsRreply(PdsReply pry) {
+        boolean result = false;
+
+        if(pdsdao.insertPdsRreply(pry)){result = true;}
+
+
+        return result;
+    }
+
 
     @Override
     public Map<String, Object> readPds(Integer page, String ftype, String fkey) {

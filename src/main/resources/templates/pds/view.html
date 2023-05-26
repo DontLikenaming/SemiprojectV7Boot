@@ -81,25 +81,33 @@
                                 <td style="width:25%"><h4 style="font-weight: bold">[[${rp.userid}]]</h4></td>
                                 <td>
                                     <div style="background: yellow; padding: 5px">&nbsp;
-                                &nbsp;       <th:block th:if="${session.UID eq rp.userid}">
+                                    <th:block th:if="${!#strings.isEmpty(session.UID)}">
+                                    <th:block th:if="${session.UID eq rp.userid}">
                                             <span style="float: right">
                                                 / [수정] / [삭제]
                                             </span>
                                         </th:block>
-                                        <span style="float: right"><a th:href="|/pds/rreplyok?rpno=${rp.rpno}|">[대댓글]</a>&nbsp;</span>
+                                        <span style="float: right"><a th:href="|javascript:showComment(${rp.rpno})|">[대댓글]</a>&nbsp;</span>
+                                    </th:block>
                                         <span style="float: right; padding-right: 3px;" th:text="${rp.regdate.toLocalTime()}"></span>
-                                         </div>
+                                     </div>
+
                                     <p style="padding: 5px 0" th:text="${rp.reply}"></p>
                                 </td>
                             </th:block>
                             <th:block th:if="${rp.rpno ne rp.refno}">
                                 <!--대댓글-->
-                                <td style="width:25%"><h4>&nbsp;</h4></td>
+                                <td style="width:25%">&nbsp;</td>
                                 <td>
                                     <div style="background: lime; padding: 5px">
                                         <span style="font-weight: bold">[[${rp.userid}]]</span>
-                                &nbsp;        <th:block th:if="${session.UID eq rp.userid}">
-                                            <span style="float: right">[대댓글] / [수정] / [삭제]</span>
+                                        <th:block th:if="${!#strings.isEmpty(session.UID)}">
+                                        <th:block th:if="${session.UID eq rp.userid}">
+                                            <span style="float: right">
+                                                / [수정] / [삭제]
+                                            </span>
+                                        </th:block>
+                                        <span style="float: right"><a th:href="|javascript:showComment(${rp.rpno})|">[대댓글]</a>&nbsp;</span>
                                         </th:block>
                                         <span style="float: right; padding-right: 3px;" th:text="${rp.regdate.toLocalTime()}"></span>
                                     </div>
@@ -130,6 +138,32 @@
             </div>
         </div>
         </th:block>
+    </div>
+
+    <!-- 대댓글 쓰기 -->
+    <div class="modal hide" id="cmtModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">
+                        <i class="fa-solid fa-message"> 대댓글 쓰기</i>
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <form name="cmtfrm" id="cmtfrm" method="post">
+                            <textarea name="reply" id="comment" rows="7"
+                                      cols="60"></textarea>
+                        <input type="hidden" name="userid" th:value="${session.UID}">
+                        <input type="hidden" name="pno" th:value="${pds.pno}">
+                        <input type="hidden" name="refno" id="refno">
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" id="cmtbtn"
+                            class="btn btn-danger">대댓글 작성</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="/assets/js/pds.js"></script>
