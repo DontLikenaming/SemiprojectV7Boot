@@ -21,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -73,9 +75,21 @@ public class PdsController {
     public String view(Integer pno, Model m){
         if((pno==null)||(pno<=0)){pno = 1;}
 
+        LocalDateTime ldt = LocalDateTime.now();
+        String today = String.valueOf(ldt).substring(0, 10);
+        List<Boolean> dayCheck = new ArrayList();
+
+        List<PdsReply> replies = pdssrv.readPdsReply(pno);
+        for(PdsReply reply : replies){
+            String makeDay = String.valueOf(reply.getRegdate()).substring(0, 10);
+            if(today.equals(makeDay)){dayCheck.add(true);}
+            else {dayCheck.add(false);}
+        }
+
         m.addAttribute("pds", pdssrv.readOnePds(pno));
         m.addAttribute("attach", pdssrv.readOneAttach(pno));
-        m.addAttribute("rplist", pdssrv.readPdsReply(pno));
+        m.addAttribute("rplist", replies);
+        m.addAttribute("dayCheck", dayCheck);
 
         return "pds/view";
     }

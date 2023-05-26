@@ -75,7 +75,7 @@
         <div class="row mt-3">
             <div class="offset-2 col-8">
                 <table class="table" style="border-top: 3px solid black; border-bottom: 3px solid black">
-                        <tr th:each="rp : ${rplist}" style="border: white">
+                        <tr th:each="rp, stat : ${rplist}" style="border: white">
                             <th:block th:if="${rp.rpno eq rp.refno}">
                                 <!--댓글 -->
                                 <td style="width:25%"><h4 style="font-weight: bold">[[${rp.userid}]]</h4></td>
@@ -89,7 +89,12 @@
                                         </th:block>
                                         <span style="float: right"><a th:href="|javascript:showComment(${rp.rpno})|">[대댓글]</a>&nbsp;</span>
                                     </th:block>
+                                        <th:block th:if="${dayCheck[__${stat.index}__] eq true}">
                                         <span style="float: right; padding-right: 3px;" th:text="${rp.regdate.toLocalTime()}"></span>
+                                        </th:block>
+                                        <th:block th:if="${dayCheck[__${stat.index}__] ne true}">
+                                            <span style="float: right; padding-right: 3px;" th:text="${rp.regdate.toLocalDate()+' '+rp.regdate.toLocalTime()}"></span>
+                                        </th:block>
                                      </div>
 
                                     <p style="padding: 5px 0" th:text="${rp.reply}"></p>
@@ -109,7 +114,12 @@
                                         </th:block>
                                         <span style="float: right"><a th:href="|javascript:showComment(${rp.rpno})|">[대댓글]</a>&nbsp;</span>
                                         </th:block>
-                                        <span style="float: right; padding-right: 3px;" th:text="${rp.regdate.toLocalTime()}"></span>
+                                        <th:block th:if="${dayCheck[__${stat.index}__] eq true}">
+                                            <span style="float: right; padding-right: 3px;" th:text="${rp.regdate.toLocalTime()}"></span>
+                                        </th:block>
+                                        <th:block th:if="${dayCheck[__${stat.index}__] ne true}">
+                                            <span style="float: right; padding-right: 3px;" th:text="${rp.regdate.toLocalDate()+' '+rp.regdate.toLocalTime()}"></span>
+                                        </th:block>
                                     </div>
                                     <p style="padding: 5px 0" th:text="${rp.reply}"></p>
                                 </td>
