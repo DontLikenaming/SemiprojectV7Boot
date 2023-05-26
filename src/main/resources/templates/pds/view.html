@@ -78,7 +78,7 @@
                         <tr th:each="rp : ${rplist}" style="border: white">
                             <th:block th:if="${rp.rpno eq rp.refno}">
                                 <!--댓글 -->
-                                <td style="width:25%"><h4 th:text="${rp.userid}"></h4></td>
+                                <td style="width:25%"><h4 style="font-weight: bold">[[${rp.userid}]]</h4></td>
                                 <td>
                                     <div style="background: yellow; padding: 5px">&nbsp;
                                 &nbsp;        <th:block th:if="${session.UID eq pds.userid}">
@@ -94,7 +94,7 @@
                                 <td style="width:25%"><h4>&nbsp;</h4></td>
                                 <td>
                                     <div style="background: lime; padding: 5px">
-                                        <span style="font-weight: bold" th:text="${rp.userid}"></span>
+                                        <span style="font-weight: bold">[[${rp.userid}]]</span>
                                 &nbsp;        <th:block th:if="${session.UID eq pds.userid}">
                                             <span style="float: right">[수정] / [삭제]</span>
                                         </th:block>
@@ -117,10 +117,11 @@
                             <textarea class="form-control" id="reply" name="reply" rows="3"
                             style="resize: none;"></textarea>
                         </div>
-                        <button type="button" class="btn btn-secondary col-2">
+                        <button type="button" class="btn btn-secondary col-2" id="rpnewbtn" name="rpnewbtn">
                             <i class="fa fa-commenting"> 댓글 입력</i>
                         </button>
-
+                        <input type="hidden" name="userid" id="userid" th:value="${session.userid}">
+                        <input type="hidden" name="pno" id="pno" th:value="${pds.pno}">
                     </div>
                 </form>
             </div>

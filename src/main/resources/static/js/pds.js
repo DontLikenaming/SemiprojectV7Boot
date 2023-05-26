@@ -28,3 +28,15 @@ newbtn?.addEventListener("click",()=>{
 listbtn?.addEventListener("click",()=>{
     location.href = "../../pds/list";
 })
+let rpfrm = document.forms.rpfrm;
+let rpnewbtn = document.querySelector("#rpnewbtn");
+rpnewbtn?.addEventListener("click",()=>{
+    if(rpfrm.reply.value==''){ alert("댓글을 작성해주세요!") }
+    else if(rpfrm.userid.value==''){ alert("본문을 입력해주세요!") }
+    else if(rpfrm.pno.value==''){ alert("번호 매칭 에러!") }
+    else {
+        rpfrm.method = "post";
+        rpfrm.action = "/pds/replyok";
+        rpfrm.submit();
+    }
+})
