@@ -25,4 +25,6 @@ public interface PdsDAO {
     Boolean updateAttech(String fname);
 
     List<PdsReply> selectPdsReply(Integer pno);
+
+    boolean insertPdsReply(PdsReply pry);
 }

@@ -87,6 +87,11 @@ public class PdsServiceImpl implements PdsService{
         return pdsdao.selectPdsReply(pno);
     }
 
+    @Override
+    public boolean newPdsReply(PdsReply pry) {
+        return pdsdao.insertPdsReply(pry);
+    }
+
 
     @Override
     public Map<String, Object> readPds(Integer page, String ftype, String fkey) {

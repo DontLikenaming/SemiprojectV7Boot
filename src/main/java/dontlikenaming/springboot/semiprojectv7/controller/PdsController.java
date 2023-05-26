@@ -2,6 +2,7 @@ package dontlikenaming.springboot.semiprojectv7.controller;
 
 import dontlikenaming.springboot.semiprojectv7.model.Pds;
 import dontlikenaming.springboot.semiprojectv7.model.PdsAttach;
+import dontlikenaming.springboot.semiprojectv7.model.PdsReply;
 import dontlikenaming.springboot.semiprojectv7.service.PdsService;
 import dontlikenaming.springboot.semiprojectv7.utils.PdsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,5 +92,15 @@ public class PdsController {
         UrlResource resource = pdssrv.getResource(fname, uuid);
 
         return ResponseEntity.ok().headers(header).body(resource);
+    }
+
+    @PostMapping("replyok")
+    public String replyok(@Valid PdsReply pry, BindingResult br){
+        String view = "redirect:/pds/view?pno="+pry.getPno();
+
+        if(!br.hasErrors()){
+            pdssrv.newPdsReply(pry);
+        }
+        return view;
     }
 }

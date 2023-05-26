@@ -30,4 +30,6 @@ public interface PdsService {
     UrlResource getResource(String fname, String uuid);
 
     List<PdsReply> readPdsReply(Integer pno);
+
+    boolean newPdsReply(PdsReply pry);
 }

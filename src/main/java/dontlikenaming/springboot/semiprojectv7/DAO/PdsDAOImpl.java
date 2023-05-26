@@ -15,10 +15,8 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Repository("pdsdao")
 public class PdsDAOImpl implements PdsDAO{
@@ -139,6 +137,16 @@ public class PdsDAOImpl implements PdsDAO{
     @Override
     public List<PdsReply> selectPdsReply(Integer pno) {
         return pdsReplyRepository.findByPnoOrderByRefnoAscRegdateAsc(pno);
+    }
+
+    @Override
+    public boolean insertPdsReply(PdsReply pry) {
+        boolean result = false;
+        if(pdsReplyRepository.save(pry).getRpno()>0){
+            pdsReplyRepository.updateRefno(Math.toIntExact(pry.getRpno()));
+            result = true;
+        }
+        return result;
     }
 
 }
