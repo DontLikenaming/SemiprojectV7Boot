@@ -2,7 +2,9 @@ package dontlikenaming.springboot.semiprojectv7.DAO;
 
 import dontlikenaming.springboot.semiprojectv7.model.Pds;
 import dontlikenaming.springboot.semiprojectv7.model.PdsAttach;
+import dontlikenaming.springboot.semiprojectv7.model.PdsReply;
 import dontlikenaming.springboot.semiprojectv7.repository.AttachRepository;
+import dontlikenaming.springboot.semiprojectv7.repository.PdsReplyRepository;
 import dontlikenaming.springboot.semiprojectv7.repository.PdsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,6 +12,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +25,7 @@ public class PdsDAOImpl implements PdsDAO{
 
     @Autowired PdsRepository pdsRepository;
     @Autowired AttachRepository attachRepository;
+    @Autowired PdsReplyRepository pdsReplyRepository;
 
 
     @Override
@@ -42,10 +48,12 @@ public class PdsDAOImpl implements PdsDAO{
 
         for(String ftype : ftypes) {
             switch (ftype){
-                case "jpg" : result.add("pic"); break;
+                case "jpg" :
                 case "png" : result.add("pic"); break;
-                case "csv" : result.add("txt"); break;
+
+                case "csv" :
                 case "txt" : result.add("txt"); break;
+
                 case "zip" : result.add("zip"); break;
 
                 default: result.add("default"); break;
@@ -128,17 +136,9 @@ public class PdsDAOImpl implements PdsDAO{
         return result;
     }
 
-/*    @Override
-    public Map<String, Object> downAttach(Integer pno){
-        String fname = attachRepository.findFnameByPno(pno).getFname();
-        String uuid = pdsRepository.findUuidByPno((long) pno).getUuid();
-        pdsRepository.countFdownPds(pno);
-
-        Map<String, Object> pds = new HashMap<>();
-        pds.put("fname", fname);
-        pds.put("uuid", uuid);
-
-        return pds;
-    }*/
+    @Override
+    public List<PdsReply> selectPdsReply(Integer pno) {
+        return pdsReplyRepository.findByPnoOrderByRefnoAscRegdateAsc(pno);
+    }
 
 }

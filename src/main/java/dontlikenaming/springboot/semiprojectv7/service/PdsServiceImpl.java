@@ -3,6 +3,7 @@ package dontlikenaming.springboot.semiprojectv7.service;
 import dontlikenaming.springboot.semiprojectv7.DAO.PdsDAO;
 import dontlikenaming.springboot.semiprojectv7.model.Pds;
 import dontlikenaming.springboot.semiprojectv7.model.PdsAttach;
+import dontlikenaming.springboot.semiprojectv7.model.PdsReply;
 import dontlikenaming.springboot.semiprojectv7.utils.PdsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
@@ -82,10 +83,15 @@ public class PdsServiceImpl implements PdsService{
 
 
     @Override
+    public List<PdsReply> readPdsReply(Integer pno) {
+        return pdsdao.selectPdsReply(pno);
+    }
+
+
+    @Override
     public Map<String, Object> readPds(Integer page, String ftype, String fkey) {
         int stdno = (page-1);
 
-        // 처리 시 사용할 데이터들을 해쉬맵에 담아서 보냄
         Map<String, Object> params = new HashMap<>();
         params.put("stdno", stdno);
         params.put("ftype", ftype);

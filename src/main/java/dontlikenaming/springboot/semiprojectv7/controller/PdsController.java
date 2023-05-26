@@ -74,6 +74,7 @@ public class PdsController {
 
         m.addAttribute("pds", pdssrv.readOnePds(pno));
         m.addAttribute("attach", pdssrv.readOneAttach(pno));
+        m.addAttribute("rplist", pdssrv.readPdsReply(pno));
 
         return "pds/view";
     }

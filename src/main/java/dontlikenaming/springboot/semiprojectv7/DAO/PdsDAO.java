@@ -2,6 +2,7 @@ package dontlikenaming.springboot.semiprojectv7.DAO;
 
 import dontlikenaming.springboot.semiprojectv7.model.Pds;
 import dontlikenaming.springboot.semiprojectv7.model.PdsAttach;
+import dontlikenaming.springboot.semiprojectv7.model.PdsReply;
 
 import java.util.List;
 import java.util.Map;
@@ -23,5 +24,5 @@ public interface PdsDAO {
 
     Boolean updateAttech(String fname);
 
-/*    Map<String, Object> downAttach(Integer pno);*/
+    List<PdsReply> selectPdsReply(Integer pno);
 }

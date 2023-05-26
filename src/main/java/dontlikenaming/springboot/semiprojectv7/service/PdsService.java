@@ -2,6 +2,7 @@ package dontlikenaming.springboot.semiprojectv7.service;
 
 import dontlikenaming.springboot.semiprojectv7.model.Pds;
 import dontlikenaming.springboot.semiprojectv7.model.PdsAttach;
+import dontlikenaming.springboot.semiprojectv7.model.PdsReply;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,5 +29,5 @@ public interface PdsService {
 
     UrlResource getResource(String fname, String uuid);
 
-    /*    Map<String, Object> downAttach(Integer pno);*/
+    List<PdsReply> readPdsReply(Integer pno);
 }
