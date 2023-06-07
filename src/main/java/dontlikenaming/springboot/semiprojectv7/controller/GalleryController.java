@@ -1,7 +1,7 @@
 package dontlikenaming.springboot.semiprojectv7.controller;
 
 import dontlikenaming.springboot.semiprojectv7.model.Gallery;
-import dontlikenaming.springboot.semiprojectv7.service.PdsService;
+import dontlikenaming.springboot.semiprojectv7.service.GalleryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +19,7 @@ import java.util.Map;
 @RequestMapping(value = "/gallery")
 public class GalleryController {
     @Autowired
-    //private GalleryService galsrv;
+    private GalleryService galsrv;
 
     @GetMapping(value = "/list")
     public String list(){
@@ -34,14 +34,14 @@ public class GalleryController {
 
     @PostMapping("/write")
     public String writeok(@Valid Gallery gallery, BindingResult br, List<MultipartFile> attachs){
-        String view = "gallery/write";
+        String view = "error";
 
         if(!br.hasErrors()){
-/*            Map<String, Object> pinfo = pdssrv.newPds(pds);
 
-            if (!attach.isEmpty()) { // 첨부파일이 존재한다면
-                pdssrv.newPdsAttach(attach, pinfo);
-            }*/
+            if (!attachs.isEmpty()) { // 첨부파일이 존재한다면
+                Map<String, Object> ginfo = galsrv.newGallery(gallery);
+                galsrv.newGalAttach(attachs, ginfo);
+            }
 
             view = "redirect:/gallery/list";
         }
