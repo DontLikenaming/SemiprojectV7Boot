@@ -8,3 +8,5 @@
 + lombok
 + oracle jdbc
 + maria jdbc
++ nginx
++ imgscalr
