@@ -7,6 +7,7 @@ let writebtn = document.querySelector("#writebtn");
 
 // 이미지 첨부 조건 검사
 const checkAttachs = () => {
+    let checkOK = true;
     const attachs = document.querySelector("#attachs");
 
     // 이미지 첨부 파일이 하나 이상 존재하면
@@ -21,12 +22,15 @@ const checkAttachs = () => {
 
             } else {
                 alert("첨부하려는 파일은 반드시 이미지여야 합니다!");
+                checkOK = false;
             }
         }
     }  else {
         alert("하나 이상의 이미지를 선택해주세요!");
+        checkOK = false;
     }
-    return false;
+
+    return checkOK;
 }
 
 writebtn?.addEventListener("click",()=>{
