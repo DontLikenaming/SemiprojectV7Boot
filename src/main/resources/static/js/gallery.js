@@ -7,7 +7,26 @@ let writebtn = document.querySelector("#writebtn");
 
 // 이미지 첨부 조건 검사
 const checkAttachs = () => {
+    const attachs = document.querySelector("#attachs");
 
+    // 이미지 첨부 파일이 하나 이상 존재하면
+    if('files' in attachs && attachs.files.length > 0) {
+        for (attach of attachs.files) {
+            //console.log(attach.name + ', ' + attach.type + ', ' + attach.size);
+
+            // 이미지 파일의 MINE 형식 : image/png, image/jpg, image/jpeg, image/gif...
+
+            // 첨부파일이 image 인지 검사
+            if (attach.type.startsWith('image')) {
+
+            } else {
+                alert("첨부하려는 파일은 반드시 이미지여야 합니다!");
+            }
+        }
+    }  else {
+        alert("하나 이상의 이미지를 선택해주세요!");
+    }
+    return false;
 }
 
 writebtn?.addEventListener("click",()=>{
