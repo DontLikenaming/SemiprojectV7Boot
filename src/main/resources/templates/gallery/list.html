@@ -35,10 +35,10 @@
     <div class="row justify-content-center">
         <div th:each="gal : ${#numbers.sequence(1, 25)}" class="card m-2" style="width: 18%;">
             <img src="http://localhost/cdn/suprisedCat_02.png" class="card-img-top" alt="...">
-            <div class="card-body">
+            <div class="card-body p-0 mt-2 mb-2">
                 <h5 class="card-title">글 제목</h5>
-                <p class="card-text">작성자 <span class="p-4">작성일</span></p>
-                <p class="card-text"><span><i class="fa-regular fa-eye">123</i></span> <span><i class="fa-regular fa-thumbs-up">456</i></span></p>
+                <p class="card-text mb-1">작성자 <span style="float: right"> 작성일</span></p>
+                <p class="card-text" style="float: right"><span><i class="fa-regular fa-eye"></i>123</span> <span><i class="fa-regular fa-thumbs-up"></i> 456</span></p>
             </div>
         </div>
     </div>
