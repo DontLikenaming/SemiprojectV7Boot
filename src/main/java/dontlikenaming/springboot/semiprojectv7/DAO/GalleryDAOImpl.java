@@ -2,24 +2,34 @@ package dontlikenaming.springboot.semiprojectv7.DAO;
 
 import dontlikenaming.springboot.semiprojectv7.model.GalAttach;
 import dontlikenaming.springboot.semiprojectv7.model.Gallery;
-import dontlikenaming.springboot.semiprojectv7.repository.AttachRepository;
-import dontlikenaming.springboot.semiprojectv7.repository.PdsRepository;
+import dontlikenaming.springboot.semiprojectv7.repository.GalattachRepository;
+import dontlikenaming.springboot.semiprojectv7.repository.GalleryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository("galdao")
 public class GalleryDAOImpl implements GalleryDAO {
 
-    @Autowired PdsRepository galRepository;
-    @Autowired AttachRepository attachRepository;
+    // 생성자를 이용한 스프링 빈 주입
+    private final GalleryRepository galleryRepository;
+    private final GalattachRepository galattachRepository;
 
-    @Override
-    public int insertGalAttach(GalAttach ga) {
-        return 0;
+    @Autowired
+    public GalleryDAOImpl(GalleryRepository galleryRepository, GalattachRepository galattachRepository) {
+        this.galleryRepository = galleryRepository;
+        this.galattachRepository = galattachRepository;
     }
+
 
     @Override
     public int insertGal(Gallery gallery) {
-        return 0;
+        return Math.toIntExact(galleryRepository.save(gallery).getGno());
     }
+
+    @Override
+    public int insertGalAttach(GalAttach ga) {
+        System.out.println(ga);
+        return Math.toIntExact(galattachRepository.save(ga).getGano());
+    }
+
 }
