@@ -5,7 +5,12 @@ import dontlikenaming.springboot.semiprojectv7.model.Gallery;
 import dontlikenaming.springboot.semiprojectv7.repository.GalattachRepository;
 import dontlikenaming.springboot.semiprojectv7.repository.GalleryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository("galdao")
 public class GalleryDAOImpl implements GalleryDAO {
@@ -30,6 +35,18 @@ public class GalleryDAOImpl implements GalleryDAO {
     public int insertGalAttach(GalAttach ga) {
         System.out.println(ga);
         return Math.toIntExact(galattachRepository.save(ga).getGano());
+    }
+
+    @Override
+    public Map<String, Object> selectGallery(Integer page) {
+        PageRequest paging = PageRequest.of(page-1,10, Sort.by("gno").descending());
+
+        Map<String, Object> gals = new HashMap<>();
+        // Gallery와 GalAttach를 조인해서 리스트로 가져옴
+        gals.put("gallist", galattachRepository.findAllBy(paging).getContent());
+        gals.put("cntpg", galattachRepository.findAllBy(paging).getTotalPages());
+
+        return gals;
     }
 
 }
