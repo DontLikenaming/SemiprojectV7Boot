@@ -21,7 +21,6 @@ public class GalleryServiceImpl implements GalleryService{
 
     @Override
     public Map<String, Object> newGallery(Gallery gallery) {
-
         gallery.setUuid(galutils.makeUUID());
         int gno = galdao.insertGal(gallery);
         Map<String, Object> ginfo = new HashMap<>();
@@ -33,7 +32,6 @@ public class GalleryServiceImpl implements GalleryService{
 
     @Override
     public boolean newGalAttach(List<MultipartFile> attachs, Map<String, Object> ginfo) {
-
         // 첨부 이미지 파일 업로드 처리
         GalAttach ga = galutils.processUpload(attachs, ginfo);
 
